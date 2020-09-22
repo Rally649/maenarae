@@ -48,6 +48,12 @@ public class Main {
 	@Value("${spring.datasource.url}")
 	private String dbUrl;
 
+	@Value("${spring.datasource.username}")
+	private String username;
+
+	@Value("${spring.datasource.password}")
+	private String password;
+
 	@Autowired
 	private DataSource dataSource;
 
@@ -100,6 +106,8 @@ public class Main {
 		} else {
 			HikariConfig config = new HikariConfig();
 			config.setJdbcUrl(dbUrl);
+			config.setUsername(username);
+			config.setPassword(password);
 			return new HikariDataSource(config);
 		}
 	}
