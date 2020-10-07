@@ -17,7 +17,7 @@ public class QueueDAO extends AbstractDAO {
 			@Override
 			public Void execute() throws SQLException {
 				StringBuffer sql = new StringBuffer();
-				sql.append("CREATE TABLE IF NOT EXISTS `practice`.`queue` (");
+				sql.append("CREATE TABLE IF NOT EXISTS `queue` (");
 				sql.append("`group` VARCHAR(100) NOT NULL,");
 				sql.append("`seat` VARCHAR(100) NOT NULL,");
 				sql.append("`call_time` TIMESTAMP NOT NULL,");
@@ -35,7 +35,7 @@ public class QueueDAO extends AbstractDAO {
 			@Override
 			public Void execute() throws SQLException {
 				if (!isContained(group, seat)) {
-					String sql = "INSERT practice.queue VALUES ( ?, ?, now());";
+					String sql = "INSERT queue VALUES ( ?, ?, now());";
 					executeUpdate(sql, group, seat);
 				}
 				return null;
@@ -43,7 +43,7 @@ public class QueueDAO extends AbstractDAO {
 
 			private boolean isContained(String group, String seat) throws SQLException {
 				StringBuffer sql = new StringBuffer();
-				sql.append("select count(*) from `practice`.`queue`");
+				sql.append("select count(*) from `queue`");
 				sql.append("where `queue`.`group` = ? and `queue`.`seat` = ?;");
 				Converter<Boolean> converter = new Converter<Boolean>() {
 					@Override
@@ -63,9 +63,9 @@ public class QueueDAO extends AbstractDAO {
 			@Override
 			public Integer execute() throws SQLException {
 				StringBuffer sql = new StringBuffer();
-				sql.append("select count(*) from `practice`.`queue`");
+				sql.append("select count(*) from `queue`");
 				sql.append("where `queue`.`call_time` <= (");
-				sql.append("select `queue`.`call_time` from `practice`.`queue`");
+				sql.append("select `queue`.`call_time` from `queue`");
 				sql.append("where `queue`.`group` = ? and `queue`.`seat` = ?);");
 				Converter<Integer> converter = new Converter<Integer>() {
 					@Override
