@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/webjars/jquery-ui/jquery-ui.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+</head>
+
+<body>
+	<script>
+		$(function() {
+			var group = $("#group").text();
+			var seat = $("#seat").text();
+
+			var fn = {};
+
+			fn.ajax = function( url, success){
+				$.ajax({
+					url : url,
+					type : "POST",
+					data : { group : group, seat : seat},
+					success : success
+				});
+			}
+
+			fn.check = function(){
+				const isEmpty = ( str => str== null || str=='');
+				if( !isEmpty( group) && !isEmpty( seat)){
+					fn.ajax( "/getNumberOfWaiting", function(num) {
+						if (num > 0) {
+							$("#number_of_waiting").text(num);
+							$("#message").show();
+							$("#call_button").hide();
+							setTimeout( fn.check, 30000);
+						} else {
+							$("#message").hide();
+							$("#call_button").show();
+						}
+					});
+				}
+			}
+
+			$("#call_button").on("click", function() {
+				fn.ajax( "/callStaff", fn.check);
+			});
+
+			fn.check();
+		});
+	</script>
+
+	<h1>スタッフ呼出順簡易管理システム</h1>
+	<h2>ユーザ用ページ</h2>
+
+	<table>
+		<tr>
+			<td>グループID</td>
+			<td><span id="group" th:text="${group}"></span></td>
+		</tr>
+		<tr>
+			<td>座席番号</td>
+			<td><span id="seat" th:text="${seat}"></span>
+				<form action="/user" method="get" th:if="${#strings.isEmpty(seat)}">
+					<input type="hidden" name="group" th:value="${group}"> <input
+						type="text" name="seat"> <input type="submit" value="OK">
+				</form></td>
+		</tr>
+	</table>
+
+	<p th:if="${! #strings.isEmpty(seat)}">
+	<div>
+		<button id="call_button" style="display: none">呼出</button>
+		<div id="message" style="display: none">
+			呼び出し中です。しばらくお待ち下さい。 (あと<span id="number_of_waiting"></span>人)
+		</div>
+	</div>
+</body>
+</html>
