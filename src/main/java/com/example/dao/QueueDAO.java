@@ -22,8 +22,8 @@ public class QueueDAO extends AbstractDAO {
 				sql.append("`seat` VARCHAR(100) NOT NULL,");
 				sql.append("`call_time` TIMESTAMP NOT NULL,");
 				sql.append("PRIMARY KEY (`group`, `seat`),");
-				sql.append("UNIQUE INDEX `group_UNIQUE` (`group` ASC) VISIBLE,");
-				sql.append("UNIQUE INDEX `seat_UNIQUE` (`seat` ASC) VISIBLE);");
+				sql.append("UNIQUE INDEX `group_UNIQUE` (`group` ASC),");
+				sql.append("UNIQUE INDEX `seat_UNIQUE` (`seat` ASC));");
 				executeUpdate(sql.toString());
 				return null;
 			}
