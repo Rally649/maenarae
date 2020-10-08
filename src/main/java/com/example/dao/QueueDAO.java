@@ -2,6 +2,7 @@ package com.example.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Calendar;
 
 import javax.sql.DataSource;
 
@@ -33,6 +34,10 @@ public class QueueDAO extends AbstractDAO {
 		executeFlow(new Flow<Void>() {
 			@Override
 			public Void execute() throws SQLException {
+
+				Calendar calendar = Calendar.getInstance();
+				System.out.println(calendar.getTime());
+
 				if (!isContained(group, seat)) {
 					String sql = "INSERT queue VALUES ( ?, ?, now());";
 					executeUpdate(sql, group, seat);
