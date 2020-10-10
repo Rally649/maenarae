@@ -58,6 +58,9 @@ public class Main {
 	@Value("${spring.datasource.password}")
 	private String password;
 
+	@Value("${time.difference.hour}")
+	private int timeDiff;
+
 	@Autowired
 	private DataSource dataSource;
 
@@ -110,7 +113,7 @@ public class Main {
 	@RequestMapping("/callStaff")
 	@ResponseBody
 	void callStaff(@RequestParam("group") String group, @RequestParam("seat") String seat) throws SQLException {
-		dao.recordCall(group, seat);
+		dao.recordCall(group, seat, timeDiff);
 	}
 
 	@RequestMapping("/getNumberOfWaiting")

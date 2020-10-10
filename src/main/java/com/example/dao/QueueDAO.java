@@ -29,12 +29,12 @@ public class QueueDAO extends AbstractDAO {
 		});
 	}
 
-	public void recordCall(String group, String seat) throws SQLException {
+	public void recordCall(String group, String seat, int timeDiff) throws SQLException {
 		executeFlow(new Flow<Void>() {
 			@Override
 			public Void execute() throws SQLException {
 				if (!isContained(group, seat)) {
-					String sql = "INSERT queue VALUES ( ?, ?, now());";
+					String sql = String.format("INSERT queue VALUES ( ?, ?, now() + interval %d hour);", timeDiff);
 					executeUpdate(sql, group, seat);
 				}
 				return null;
@@ -80,5 +80,4 @@ public class QueueDAO extends AbstractDAO {
 		});
 		return num;
 	}
-
 }
