@@ -20,7 +20,6 @@ import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URLDecoder;
-import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -48,6 +47,10 @@ import com.zaxxer.hikari.HikariDataSource;
 @Controller
 @SpringBootApplication
 public class Main {
+
+	private static final String GROUP = "group";
+
+	private static final String SEAT = "seat";
 
 	@Value("${spring.datasource.url}")
 	private String dbUrl;
@@ -77,7 +80,7 @@ public class Main {
 		String host = request.getServerName();
 		int port = request.getServerPort();
 		List<String> paths = Arrays.asList("user", "staff");
-		String query = "group=";
+		String query = GROUP + "=";
 		for (String path : paths) {
 			URI uri = new URI(scheme, null, host, port, "/" + path, query, null);
 			model.put(path, uri);
@@ -87,12 +90,34 @@ public class Main {
 
 	@RequestMapping("/user")
 	String user(HttpServletRequest request, Map<String, Object> model) {
-		List<String> names = Arrays.asList("group", "seat");
+		setParameterToModel(request, model, GROUP, SEAT);
+		return "user";
+	}
+
+	@RequestMapping("/staff")
+	String staff(HttpServletRequest request, Map<String, Object> model) {
+		setParameterToModel(request, model, GROUP);
+		return "staff";
+	}
+
+	private void setParameterToModel(HttpServletRequest request, Map<String, Object> model, String... names) {
 		for (String name : names) {
 			String value = getParameter(request, name);
 			model.put(name, value);
 		}
-		return "user";
+	}
+
+	@RequestMapping("/getCalls")
+	@ResponseBody
+	List<StaffCall> getCalls(@RequestParam(GROUP) String group) {
+		List<StaffCall> calls = dao.getCallList(group);
+		return calls;
+	}
+
+	@RequestMapping("/deleteCall")
+	@ResponseBody
+	void deleteCall(@RequestParam(GROUP) String group, @RequestParam(SEAT) String seat) {
+		dao.deleteCall(group, seat);
 	}
 
 	private String getParameter(HttpServletRequest request, String name) {
@@ -105,27 +130,21 @@ public class Main {
 		}
 	}
 
-	@RequestMapping("/staff")
-	String staff() {
-		return "staff";
-	}
-
 	@RequestMapping("/callStaff")
 	@ResponseBody
-	void callStaff(@RequestParam("group") String group, @RequestParam("seat") String seat) throws SQLException {
+	void callStaff(@RequestParam(GROUP) String group, @RequestParam(SEAT) String seat) {
 		dao.recordCall(group, seat, timeDiff);
 	}
 
 	@RequestMapping("/getNumberOfWaiting")
 	@ResponseBody
-	int getNumberOfWaiting(@RequestParam("group") String group, @RequestParam("seat") String seat)
-			throws SQLException {
+	int getNumberOfWaiting(@RequestParam(GROUP) String group, @RequestParam(SEAT) String seat) {
 		int num = dao.getNumberOfWaiting(group, seat);
 		return num;
 	}
 
 	@Bean
-	public DataSource dataSource() throws SQLException {
+	public DataSource dataSource() {
 		if (dbUrl == null || dbUrl.isEmpty()) {
 			return new HikariDataSource();
 		} else {
@@ -138,7 +157,7 @@ public class Main {
 	}
 
 	@Bean
-	public QueueDAO dao() throws SQLException {
+	public QueueDAO dao() {
 		return new QueueDAO(dataSource);
 	}
 }

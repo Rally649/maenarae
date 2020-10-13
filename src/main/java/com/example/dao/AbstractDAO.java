@@ -23,12 +23,13 @@ public class AbstractDAO {
 	/**
 	 * flowで実装された処理内容を実施する。
 	 * @param flow 処理内容
-	 * @throws SQLException
 	 */
-	protected <T> T executeFlow(Flow<T> flow) throws SQLException {
+	protected <T> T executeFlow(Flow<T> flow){
 		try (Connection con = dataSource.getConnection()) {
 			flow.setConnection(con);
 			return flow.execute();
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
 		}
 	}
 
@@ -42,18 +43,22 @@ public class AbstractDAO {
 			this.con = con;
 		}
 
-		public abstract T execute() throws SQLException;
+		public abstract T execute();
 
-		protected <U> U executeQuery(Converter<U> converter, String sql, String... parameters) throws SQLException {
+		protected <U> U executeQuery(Converter<U> converter, String sql, String... parameters) {
 			try (PreparedStatement smt = createStatement(sql, parameters);
 					ResultSet rs = smt.executeQuery()) {
 				return converter.convert(rs);
+			} catch (SQLException e) {
+				throw new RuntimeException(e);
 			}
 		}
 
-		protected void executeUpdate(String sql, String... parameters) throws SQLException {
+		protected void executeUpdate(String sql, String... parameters) {
 			try (PreparedStatement smt = createStatement(sql, parameters)) {
 				smt.executeUpdate();
+			} catch (SQLException e) {
+				throw new RuntimeException(e);
 			}
 		}
 

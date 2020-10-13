@@ -1,39 +1,76 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/webjars/jquery-ui/jquery-ui.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+<meta name="viewport" content="width=device-width">
+</head>
 
 <body>
+
+	<script>
+		$(function() {
+			var group = $("#group").text();
+
+			var fn = {};
+			fn.ajax = function(url, seat, success) {
+				$.ajax({
+					url : url,
+					type : "POST",
+					data : {
+						group : group,
+						seat : seat
+					},
+					success : success
+				});
+			}
+
+			var timeout;
+			fn.updateCalls = function() {
+				fn.ajax("/getCalls", "", function(calls) {
+					$("#calls tr").not("#caption").remove();
+					for( var call of calls){
+						var seat = call.seat;
+						var time = call.callTime;
+
+						var row = "<tr>";
+						row += "<td>" + seat + "</td>";
+						row += "<td>" + time + "</td>";
+						row += "<td><button id='"+seat+"'>削除</button></td>";
+						row += "</tr>";
+						$("#calls").append(row);
+
+						var message = "対応済みとして「" + seat + "」を削除しますか？";
+						var deleteCall = () => confirm( message) && fn.ajax( "deleteCall", seat, fn.updateCalls);
+						$("#" + seat).on("click", deleteCall);
+					}
+					clearTimeout(timeout);
+					timeout = setTimeout(fn.updateCalls, 30000);
+				});
+			}
+
+			fn.updateCalls();
+		});
+	</script>
 
 	<h1>スタッフ呼出順簡易管理システム</h1>
 	<h2>スタッフ用ページ</h2>
 
-	<p>グループID xxx
+	<p>
+		グループID <span id="group" th:text="${group}"></span>
+	</p>
 	<p>
 		<input type="checkbox" /> 呼出発生時にチャイムを鳴らす
 	</p>
 
-	<table>
-		<tr>
+	<table id="calls">
+		<tr id="caption">
 			<th>座席番号</th>
 			<th>呼出時刻</th>
 			<th>-</th>
 		</tr>
-
-		<tr>
-			<td>ABC123</td>
-			<td>12:34:56</td>
-			<td><button>対応済</button></td>
-		</tr>
-		<tr>
-			<td>ABC123</td>
-			<td>12:34:56</td>
-			<td><button>対応済</button></td>
-		</tr>
-		<tr>
-			<td>ABC123</td>
-			<td>12:34:56</td>
-			<td><button>対応済</button></td>
-		</tr>
-
 	</table>
 </body>
 </html>
