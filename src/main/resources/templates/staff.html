@@ -31,7 +31,7 @@
 			fn.updateCalls = function() {
 				fn.ajax("/getCalls", "", function(calls) {
 					$("#calls tr").not("#caption").remove();
-					for( var call of calls){
+					calls.forEach( function( call){
 						var seat = call.seat;
 						var time = call.callTime;
 
@@ -45,7 +45,8 @@
 						var message = "対応済みとして「" + seat + "」を削除しますか？";
 						var deleteCall = () => confirm( message) && fn.ajax( "deleteCall", seat, fn.updateCalls);
 						$("#" + seat).on("click", deleteCall);
-					}
+					});
+
 					clearTimeout(timeout);
 					timeout = setTimeout(fn.updateCalls, 30000);
 				});
