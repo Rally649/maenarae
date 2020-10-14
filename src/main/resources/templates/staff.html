@@ -28,7 +28,9 @@
 			}
 
 			var timeout;
-			fn.updateCalls = function() {
+			var audio = new Audio("chime.mp3");
+
+			fn.updateCalls = function( isUseingChime) {
 				fn.ajax("/getCalls", "", function(calls) {
 					$("#calls tr").not("#caption").remove();
 					calls.forEach( function( call){
@@ -48,7 +50,11 @@
 					});
 
 					clearTimeout(timeout);
-					timeout = setTimeout(fn.updateCalls, 30000);
+					timeout = setTimeout( () => fn.updateCalls( true), 30000);
+
+					if( isUseingChime && calls.length > 0 && $("#chime_check").is(":checked")){
+						audio.play();
+					}
 				});
 			}
 
@@ -63,7 +69,7 @@
 		グループID <span id="group" th:text="${group}"></span>
 	</p>
 	<p>
-		<input type="checkbox" /> 呼出発生時にチャイムを鳴らす
+		<input id="chime_check" type="checkbox" /> <label for="chime_check">呼出発生時にチャイムを鳴らす</label>
 	</p>
 
 	<table id="calls">
