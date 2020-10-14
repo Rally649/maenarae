@@ -158,6 +158,8 @@ public class Main {
 
 	@Bean
 	public QueueDAO dao() {
-		return new QueueDAO(dataSource);
+		QueueDAO dao = new QueueDAO(dataSource);
+		dao.createTable();
+		return dao;
 	}
 }

@@ -14,10 +14,9 @@ public class QueueDAO extends AbstractDAO {
 
 	public QueueDAO(DataSource dataSource) {
 		super(dataSource);
-		createTable();
 	}
 
-	private void createTable() {
+	public void createTable() {
 		executeFlow(new Flow<Void>() {
 			@Override
 			public Void execute() {
