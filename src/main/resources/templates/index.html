@@ -16,9 +16,10 @@
 					var linkId = "#" + path + "_link";
 					var urlId = "#" + path + "_url";
 					var url = $( urlId).text() + group;
+					var encodedUrl = $( urlId).text() + encodeURIComponent( group);
 					var isValid = (group != "");
 					$(linkId).text(url);
-					$(linkId).attr("href", isValid ? url : "#");
+					$(linkId).attr("href", isValid ? encodedUrl : "#");
 					$(linkId).off("click");
 					$(linkId).on("click", () => isValid ? "do nothing" : alert("グループIDを入力してください"));
 				});
