@@ -54,7 +54,7 @@
 				});
 			}
 
-			fn.updateCalls();
+			fn.updateCalls( true);
 		});
 	</script>
 
@@ -65,7 +65,8 @@
 		グループID <span id="group" th:text="${group}"></span>
 	</p>
 	<p>
-		<input id="chime_check" type="checkbox" /> <label for="chime_check">呼出発生時にチャイムを鳴らす</label>
+		<input id="chime_check" type="checkbox" checked="checked" /> <label
+			for="chime_check">呼出発生時にチャイムを鳴らす</label>
 	</p>
 
 	<table id="calls">
