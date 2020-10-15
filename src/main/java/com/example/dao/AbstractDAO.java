@@ -7,24 +7,50 @@ import java.sql.SQLException;
 
 import javax.sql.DataSource;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
+
 /**
  * DAOの抽象クラス。
  * {@link Flow}を実装し、{@link #executeFlow(Flow)}で実行。<br>
  * {@link Connection} {@link PreparedStatement} {@link ResultSet}などのcloseは、このクラス内で実施している。
  */
-public class AbstractDAO {
+@Repository
+public abstract class AbstractDAO {
 
+	@Value("${spring.datasource.url}")
+	private String dbUrl;
+
+	@Value("${spring.datasource.username}")
+	private String username;
+
+	@Value("${spring.datasource.password}")
+	private String password;
+
+	@Autowired
 	private DataSource dataSource;
 
-	public AbstractDAO(DataSource dataSource) {
-		this.dataSource = dataSource;
+	@Bean
+	public DataSource dataSource() {
+		HikariConfig config = new HikariConfig();
+		config.setJdbcUrl(dbUrl);
+		config.setUsername(username);
+		config.setPassword(password);
+		return new HikariDataSource(config);
 	}
 
 	/**
 	 * flowで実装された処理内容を実施する。
 	 * @param flow 処理内容
 	 */
-	protected <T> T executeFlow(Flow<T> flow){
+	@Transactional
+	protected <T> T executeFlow(Flow<T> flow) {
 		try (Connection con = dataSource.getConnection()) {
 			flow.setConnection(con);
 			return flow.execute();

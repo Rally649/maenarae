@@ -6,16 +6,20 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.sql.DataSource;
+import javax.annotation.PostConstruct;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import com.example.StaffCall;
 
+@Component
 public class QueueDAO extends AbstractDAO {
 
-	public QueueDAO(DataSource dataSource) {
-		super(dataSource);
-	}
+	@Value("${time.difference.hour}")
+	private int timeDiff;
 
+	@PostConstruct
 	public void createTable() {
 		executeFlow(new Flow<Void>() {
 			@Override
@@ -33,7 +37,7 @@ public class QueueDAO extends AbstractDAO {
 		});
 	}
 
-	public void recordCall(String group, String seat, int timeDiff) {
+	public void recordCall(String group, String seat) {
 		executeFlow(new FlowWithCheckingContain<Void>() {
 			@Override
 			public Void execute() {
