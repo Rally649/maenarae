@@ -9,6 +9,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import com.example.StaffCall;
@@ -123,5 +124,17 @@ public class QueueDAO extends AbstractDAO {
 			};
 			return executeQuery(converter, sql, group, seat);
 		}
+	}
+
+	@Scheduled(cron = "0 0 * * * *", zone = "Asia/Tokyo")
+	public void takeInventory() {
+		executeFlow(new Flow<Void>() {
+			@Override
+			public Void execute() {
+				String sql = "delete from queue where now() + interval %d hour - interval 1 day > call_time";
+				executeUpdate(String.format(sql, timeDiff));
+				return null;
+			}
+		});
 	}
 }
