@@ -4,28 +4,73 @@
 <head th:replace="fragments/template :: head(title=トップページ)">
 </head>
 
+<style>
+#modal, #qr_code {
+	position: absolute;
+}
+
+#modal {
+	left: 0;
+	top: 0;
+	background: rgba(0, 0, 0, 0.6);
+	height: 100vh;
+	width: 100%;
+	display: none;
+}
+
+#qr_code {
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+}
+
+canvas {
+	width: 80vmin;
+}
+
+#staff_qr, #user_qr {
+	width: 30px;
+}
+</style>
+
 <body>
+	<script src="js/jquery.qrcode.min.js"></script>
 	<script>
 		$(function() {
-			var func = {};
+			var fn = {};
 
-			func.updateUrl = function() {
+			fn.updateUrl = function() {
 				var group = $("#group").val();
 				var paths = [ "staff", "user"];
+				var message = "グループIDを入力してください";
 				paths.forEach( function( path){
 					var linkId = "#" + path + "_link";
 					var urlId = "#" + path + "_url";
 					var url = $( urlId).text() + encodeURIComponent( group);
 					var isValid = (group != "");
+
 					$(linkId).text(url);
 					$(linkId).attr("href", isValid ? url : "#");
 					$(linkId).off("click");
-					$(linkId).on("click", () => isValid ? "do nothing" : alert("グループIDを入力してください"));
+					$(linkId).on("click", () => isValid ? "do nothing" : alert( message));
+
+					var qrId= "#" + path +"_qr";
+					$( qrId).off( "click");
+					$( qrId).on( "click", () => isValid ? fn.showModal( linkId) : alert( message));
 				});
 			}
 
-			func.updateUrl();
-			$("#group").change(func.updateUrl);
+			fn.showModal = function( id){
+				var url = $(id).text();
+				$("#qr_code").html("");
+				$("#qr_code").qrcode({text:url});
+				$("#modal").fadeIn();
+			}
+
+			fn.updateUrl();
+			$("#group").change(fn.updateUrl);
+
+			$("#modal").on( "click", () => $("#modal").fadeOut());
 		})
 	</script>
 
@@ -40,16 +85,22 @@
 	<table>
 		<tr>
 			<td>スタッフ用</td>
+			<td><img id="staff_qr" src="qr_code.png" /></td>
 			<td><a id="staff_link"></a></td>
 		</tr>
 		<tr>
 			<td>ユーザ用</td>
+			<td><img id="user_qr" src="qr_code.png" /></td>
 			<td><a id="user_link"></a></td>
 		</tr>
 	</table>
 
 	<span id="staff_url" th:text="${staff}" style="display: none"></span>
 	<span id="user_url" th:text="${user}" style="display: none"></span>
+
+	<div id="modal">
+		<div id="qr_code"></div>
+	</div>
 
 	<p>
 	<h2>概要</h2>
