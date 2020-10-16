@@ -20,7 +20,6 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -60,22 +59,16 @@ public class Main {
 	}
 
 	@RequestMapping("/user")
-	String user(@RequestParam Map<String, String> params, Model model) {
-		setParameter(params, model, "group", "seat");
+	String user(@RequestParam String group, String seat, Model model) {
+		model.addAttribute("group", group);
+		model.addAttribute("seat", seat);
 		return "user";
 	}
 
 	@RequestMapping("/staff")
-	String staff(@RequestParam Map<String, String> params, Model model) {
-		setParameter(params, model, "group");
+	String staff(@RequestParam String group, Model model) {
+		model.addAttribute("group", group);
 		return "staff";
-	}
-
-	private void setParameter(Map<String, String> params, Model model, String... names) {
-		for (String name : names) {
-			String value = params.get(name);
-			model.addAttribute(name, value);
-		}
 	}
 
 	@Autowired
