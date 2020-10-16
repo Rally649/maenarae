@@ -36,8 +36,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.dao.QueueDAO;
 
-//TODO コードを別クラスに分ける
-
 @Controller
 @SpringBootApplication
 @EnableScheduling
