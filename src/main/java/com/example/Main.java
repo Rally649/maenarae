@@ -83,14 +83,16 @@ public class Main {
 
 	@RequestMapping("/deleteCall")
 	@ResponseBody
-	void deleteCall(@RequestParam String group, @RequestParam String seat) {
+	String deleteCall(@RequestParam String group, @RequestParam String seat) {
 		dao.deleteCall(group, seat);
+		return "Done.";
 	}
 
 	@RequestMapping("/callStaff")
 	@ResponseBody
-	void callStaff(@RequestParam String group, @RequestParam String seat) {
+	String callStaff(@RequestParam String group, @RequestParam String seat) {
 		dao.recordCall(group, seat);
+		return "Done.";
 	}
 
 	@RequestMapping("/getNumberOfWaiting")
