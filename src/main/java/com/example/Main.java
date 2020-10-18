@@ -23,7 +23,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -31,9 +30,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-
-import com.example.dao.QueueDAO;
 
 @Controller
 @SpringBootApplication
@@ -69,36 +65,5 @@ public class Main {
 	String staff(@RequestParam String group, Model model) {
 		model.addAttribute("group", group);
 		return "staff";
-	}
-
-	@Autowired
-	private QueueDAO dao;
-
-	@RequestMapping("/getCalls")
-	@ResponseBody
-	List<StaffCall> getCalls(@RequestParam String group) {
-		List<StaffCall> calls = dao.getCallList(group);
-		return calls;
-	}
-
-	@RequestMapping("/deleteCall")
-	@ResponseBody
-	String deleteCall(@RequestParam String group, @RequestParam String seat) {
-		dao.deleteCall(group, seat);
-		return "Done.";
-	}
-
-	@RequestMapping("/callStaff")
-	@ResponseBody
-	String callStaff(@RequestParam String group, @RequestParam String seat) {
-		dao.recordCall(group, seat);
-		return "Done.";
-	}
-
-	@RequestMapping("/getNumberOfWaiting")
-	@ResponseBody
-	int getNumberOfWaiting(@RequestParam String group, @RequestParam String seat) {
-		int num = dao.getNumberOfWaiting(group, seat);
-		return num;
 	}
 }
