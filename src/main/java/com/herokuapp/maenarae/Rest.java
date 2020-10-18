@@ -1,4 +1,4 @@
-package com.herokuapp.maenarae.controller;
+package com.herokuapp.maenarae;
 
 import java.util.List;
 

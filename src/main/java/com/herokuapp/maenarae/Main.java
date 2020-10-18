@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.herokuapp.maenarae.controller;
+package com.herokuapp.maenarae;
 
 import java.net.URI;
 import java.net.URISyntaxException;
