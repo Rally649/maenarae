@@ -4,6 +4,35 @@
 <head th:replace="fragments/template :: head(title=ユーザ用ページ)">
 </head>
 
+<style>
+#modal, #qr_code {
+	position: absolute;
+}
+
+#modal {
+	left: 0;
+	top: 0;
+	background: rgba(0, 0, 0, 0.6);
+	height: 100vh;
+	width: 100%;
+	display: none;
+}
+
+#qr_code {
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+}
+
+canvas {
+	width: 80vmin;
+}
+
+#user_qr {
+	width: 30px;
+}
+</style>
+
 <body>
 	<script>
 		$(function() {
@@ -43,11 +72,21 @@
 			});
 
 			fn.check();
+
+			$("#user_qr").on("click", function(){
+				var url = $("#url").text() + group;
+				$("#qr_code").html("");
+				$("#qr_code").qrcode({text:url});
+				$("#modal").fadeIn();
+			});
+			$("#modal").on( "click", () => $("#modal").fadeOut());
 		});
 	</script>
 
 	<h1>スタッフ呼出順簡易管理システム</h1>
-	<h2>ユーザ用ページ</h2>
+	<h2>
+		ユーザ用ページ<img id="user_qr" src="qr_code.png" />
+	</h2>
 
 	<table>
 		<tr>
@@ -71,5 +110,12 @@
 			呼び出し中です。しばらくお待ち下さい。 (あと<span id="number_of_waiting"></span>人)
 		</div>
 	</div>
+
+	<span id="url" th:text="${user}" style="display: none;"></span>
+
+	<div id="modal">
+		<div id="qr_code"></div>
+	</div>
+
 </body>
 </html>

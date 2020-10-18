@@ -18,8 +18,6 @@ package com.herokuapp.maenarae;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.Arrays;
-import java.util.List;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -36,41 +34,66 @@ import org.springframework.web.bind.annotation.RequestParam;
 @SpringBootApplication
 @EnableScheduling
 public class Main {
+	private enum Path {
+		INDEX, USER, STAFF
+	}
+
+	private enum Param {
+		GROUP, SEAT, UUID
+	}
 
 	public static void main(String[] args) throws Exception {
 		SpringApplication.run(Main.class, args);
 	}
 
 	@RequestMapping("/")
-	String index(HttpServletRequest request, Model model) throws URISyntaxException {
-		setURL(request, model);
+	String index(HttpServletRequest request, Model model) {
 		UUID uuid = UUID.randomUUID();
-		model.addAttribute("uuid", uuid);
-		return "index";
-	}
-
-	private void setURL(HttpServletRequest request, Model model) throws URISyntaxException {
-		String scheme = request.getScheme();
-		String host = request.getServerName();
-		int port = request.getServerPort();
-		List<String> paths = Arrays.asList("user", "staff");
-		String query = "group=";
-		for (String path : paths) {
-			URI uri = new URI(scheme, null, host, port, "/" + path, query, null);
-			model.addAttribute(path, uri);
-		}
+		addAttribute(model, Param.UUID, uuid);
+		setURL(request, model, Path.USER, Path.STAFF);
+		return getName(Path.INDEX);
 	}
 
 	@RequestMapping("/user")
-	String user(@RequestParam String group, String seat, Model model) {
-		model.addAttribute("group", group);
-		model.addAttribute("seat", seat);
-		return "user";
+	String user(HttpServletRequest request, @RequestParam String group, String seat, Model model) {
+		addAttribute(model, Param.GROUP, group);
+		addAttribute(model, Param.SEAT, seat);
+		setURL(request, model, Path.USER);
+		return getName(Path.USER);
+
 	}
 
 	@RequestMapping("/staff")
-	String staff(@RequestParam String group, Model model) {
-		model.addAttribute("group", group);
-		return "staff";
+	String staff(HttpServletRequest request, @RequestParam String group, Model model) {
+		addAttribute(model, Param.GROUP, group);
+		setURL(request, model, Path.STAFF);
+		return getName(Path.STAFF);
+	}
+
+	private void setURL(HttpServletRequest request, Model model, Path... paths) {
+		String scheme = request.getScheme();
+		String host = request.getServerName();
+		int port = request.getServerPort();
+		String query = getName(Param.GROUP) + "=";
+		for (Path path : paths) {
+			try {
+				URI uri = new URI(scheme, null, host, port, "/" + getName(path), query, null);
+				String paramName = getName(path);
+				model.addAttribute(paramName, uri);
+			} catch (URISyntaxException e) {
+				throw new RuntimeException(e);
+			}
+		}
+	}
+
+	private void addAttribute(Model model, Param param, Object value) {
+		String paramName = getName(param);
+		model.addAttribute(paramName, value);
+	}
+
+	private String getName(Enum<?> e) {
+		String name = e.name();
+		String lowerCase = name.toLowerCase();
+		return lowerCase;
 	}
 }
