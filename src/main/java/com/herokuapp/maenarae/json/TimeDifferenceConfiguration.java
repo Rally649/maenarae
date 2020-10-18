@@ -1,4 +1,4 @@
-package com.example;
+package com.herokuapp.maenarae.json;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;

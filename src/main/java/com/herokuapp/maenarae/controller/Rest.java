@@ -1,4 +1,4 @@
-package com.example;
+package com.herokuapp.maenarae.controller;
 
 import java.util.List;
 
@@ -7,7 +7,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.dao.QueueDAO;
+import com.herokuapp.maenarae.dao.QueueDAO;
+import com.herokuapp.maenarae.json.StaffCall;
 
 @RestController
 public class Rest {

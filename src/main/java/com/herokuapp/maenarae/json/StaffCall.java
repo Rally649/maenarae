@@ -1,4 +1,4 @@
-package com.example;
+package com.herokuapp.maenarae.json;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

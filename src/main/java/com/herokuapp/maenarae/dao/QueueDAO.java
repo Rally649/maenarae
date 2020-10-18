@@ -1,4 +1,4 @@
-package com.example.dao;
+package com.herokuapp.maenarae.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import com.example.StaffCall;
+import com.herokuapp.maenarae.json.StaffCall;
 
 @Component
 public class QueueDAO extends AbstractDAO {

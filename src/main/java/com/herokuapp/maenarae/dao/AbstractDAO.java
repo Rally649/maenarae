@@ -1,4 +1,4 @@
-package com.example.dao;
+package com.herokuapp.maenarae.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
