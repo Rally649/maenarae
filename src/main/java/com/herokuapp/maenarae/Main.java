@@ -20,6 +20,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -42,6 +43,13 @@ public class Main {
 
 	@RequestMapping("/")
 	String index(HttpServletRequest request, Model model) throws URISyntaxException {
+		setURL(request, model);
+		UUID uuid = UUID.randomUUID();
+		model.addAttribute("uuid", uuid);
+		return "index";
+	}
+
+	private void setURL(HttpServletRequest request, Model model) throws URISyntaxException {
 		String scheme = request.getScheme();
 		String host = request.getServerName();
 		int port = request.getServerPort();
@@ -51,7 +59,6 @@ public class Main {
 			URI uri = new URI(scheme, null, host, port, "/" + path, query, null);
 			model.addAttribute(path, uri);
 		}
-		return "index";
 	}
 
 	@RequestMapping("/user")
