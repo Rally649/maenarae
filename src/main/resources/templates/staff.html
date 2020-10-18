@@ -41,8 +41,9 @@
 						$("#calls").append(row);
 
 						var message = "対応済みとして「" + seat + "」を削除しますか？";
-						var deleteCall = () => confirm( message) && fn.ajax( "deleteCall", seat, fn.updateCalls);
-						$("#" + seat).on("click", deleteCall);
+						const updateCalls = () => fn.updateCalls( false);
+						const deleteCall = () => fn.ajax( "deleteCall", seat, updateCalls);
+						$("#" + seat).on("click", () => confirm( message) && deleteCall());
 					});
 
 					clearTimeout(timeout);
@@ -54,7 +55,7 @@
 				});
 			}
 
-			fn.updateCalls();
+			fn.updateCalls( false);
 		});
 	</script>
 
