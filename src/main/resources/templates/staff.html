@@ -46,9 +46,8 @@ canvas {
 					data : {
 						group : group,
 						seat : seat
-					},
-					success : success
-				});
+					}
+				}).done( data => success( data));
 			}
 
 			var timeout;

@@ -45,9 +45,8 @@ canvas {
 				$.ajax({
 					url : url,
 					type : "POST",
-					data : { group : group, seat : seat},
-					success : success
-				});
+					data : { group : group, seat : seat}
+				}).done( data => success( data));
 			}
 
 			fn.check = function(){
