@@ -84,12 +84,9 @@ canvas {
 
 			fn.updateCalls( false);
 
-			$("#staff_qr").on("click", function(){
-				var url = $("#url").text() + group;
-				$("#qr_code").html("");
-				$("#qr_code").qrcode({text:url});
-				$("#modal").fadeIn();
-			});
+			var url = $("#url").text() + group;
+			$("#qr_code").qrcode({text:url});
+			$("#staff_qr").on("click", () => $("#modal").fadeIn());
 			$("#modal").on( "click", () => $("#modal").fadeOut());
 		});
 	</script>

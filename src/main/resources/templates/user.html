@@ -72,13 +72,10 @@ canvas {
 
 			fn.check();
 
-			$("#user_qr").on("click", function(){
-				var url = $("#url").text() + group;
-				$("#qr_code").html("");
-				$("#qr_code").qrcode({text:url});
-				$("#modal").fadeIn();
-			});
-			$("#modal").on( "click", () => $("#modal").fadeOut());
+			var url = $("#url").text() + group;
+			$("#qr_code").qrcode({text:url});
+			$("#user_qr").on("click",() => $("#modal").fadeIn());
+			$("#modal").on("click", () => $("#modal").fadeOut());
 		});
 	</script>
 
