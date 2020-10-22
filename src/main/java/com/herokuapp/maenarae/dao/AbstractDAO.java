@@ -33,6 +33,9 @@ public abstract class AbstractDAO {
 	@Value("${spring.datasource.password}")
 	private String password;
 
+	@Value("${spring.datasource.hikari.max-lifetime}")
+	private long maxLifetimeMs;
+
 	@Autowired
 	private DataSource dataSource;
 
@@ -42,6 +45,7 @@ public abstract class AbstractDAO {
 		config.setJdbcUrl(dbUrl);
 		config.setUsername(username);
 		config.setPassword(password);
+		config.setMaxLifetime(maxLifetimeMs);
 		return new HikariDataSource(config);
 	}
 
