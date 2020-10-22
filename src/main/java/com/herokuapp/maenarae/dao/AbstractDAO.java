@@ -8,13 +8,8 @@ import java.sql.SQLException;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-
-import com.zaxxer.hikari.HikariConfig;
-import com.zaxxer.hikari.HikariDataSource;
 
 /**
  * DAOの抽象クラス。
@@ -24,30 +19,8 @@ import com.zaxxer.hikari.HikariDataSource;
 @Repository
 public abstract class AbstractDAO {
 
-	@Value("${spring.datasource.url}")
-	private String dbUrl;
-
-	@Value("${spring.datasource.username}")
-	private String username;
-
-	@Value("${spring.datasource.password}")
-	private String password;
-
-	@Value("${spring.datasource.hikari.max-lifetime}")
-	private long maxLifetimeMs;
-
 	@Autowired
 	private DataSource dataSource;
-
-	@Bean
-	public DataSource dataSource() {
-		HikariConfig config = new HikariConfig();
-		config.setJdbcUrl(dbUrl);
-		config.setUsername(username);
-		config.setPassword(password);
-		config.setMaxLifetime(maxLifetimeMs);
-		return new HikariDataSource(config);
-	}
 
 	/**
 	 * flowで実装された処理内容を実施する。
