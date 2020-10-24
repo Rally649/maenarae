@@ -16,3 +16,7 @@ ul {
 li {
 	margin-bottom: 1rem;
 }
+
+#url {
+	display: none;
+}
