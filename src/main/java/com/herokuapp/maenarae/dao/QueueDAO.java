@@ -39,13 +39,11 @@ public class QueueDAO extends AbstractDAO {
 	}
 
 	public void recordCall(String group, String seat) {
-		executeFlow(new FlowWithCheckingContain<Void>() {
+		executeFlow(new Flow<Void>() {
 			@Override
 			public Void execute() {
-				if (!isContained(group, seat)) {
-					String sql = String.format("insert queue values ( ?, ?, now() + interval %d hour);", timeDiff);
-					executeUpdate(sql, group, seat);
-				}
+				String sql = String.format("insert ignore queue values ( ?, ?, now() + interval %d hour);", timeDiff);
+				executeUpdate(sql, group, seat);
 				return null;
 			}
 		});
@@ -99,31 +97,14 @@ public class QueueDAO extends AbstractDAO {
 	}
 
 	public void deleteCall(String group, String seat) {
-		executeFlow(new FlowWithCheckingContain<Void>() {
+		executeFlow(new Flow<Void>() {
 			@Override
 			public Void execute() {
-				if (isContained(group, seat)) {
-					String sql = "delete from `queue` where `queue`.`group` = ? and `queue`.`seat` = ?;";
-					executeUpdate(sql, group, seat);
-				}
+				String sql = "delete from `queue` where `queue`.`group` = ? and `queue`.`seat` = ?;";
+				executeUpdate(sql, group, seat);
 				return null;
 			}
 		});
-	}
-
-	private abstract class FlowWithCheckingContain<T> extends Flow<T> {
-		protected boolean isContained(String group, String seat) {
-			String sql = "select count(*) from `queue` where `group` = ? and `seat` = ?;";
-			Converter<Boolean> converter = new Converter<Boolean>() {
-				@Override
-				public Boolean convert(ResultSet rs) throws SQLException {
-					rs.next();
-					int num = rs.getInt(1);
-					return num > 0;
-				}
-			};
-			return executeQuery(converter, sql, group, seat);
-		}
 	}
 
 	@Scheduled(cron = "0 0 * * * *", zone = "Asia/Tokyo")
