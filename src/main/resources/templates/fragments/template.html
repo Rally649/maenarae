@@ -1,11 +1,13 @@
 <!doctype html>
 <html xmlns:th="http://www.thymeleaf.org">
 
-<head th:fragment="head(title)">
+<head th:fragment="head(name, title)">
 <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
-<script th:src="@{/webjars/jquery-ui/jquery-ui.min.js}"></script>
-<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
 <script src="js/jquery.qrcode.min.js"></script>
+<link rel="stylesheet"
+	th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+<link rel="stylesheet" th:href="${'/css/common.css'}" />
+<link rel="stylesheet" th:href="${'/css/' + name +'.css'}" />
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, minimum-scale=1.0">
 <title th:text="${'スタッフ呼出順管理 | ' + title}"></title>

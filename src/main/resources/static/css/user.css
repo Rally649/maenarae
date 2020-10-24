@@ -1,0 +1,25 @@
+@charset "UTF-8";
+
+body {
+	width: fit-content;
+}
+
+dt {
+	font-size: 1.2rem;
+}
+
+dd {
+	margin-left: 40px;
+}
+
+#group, #seat {
+	width: 21rem;
+}
+
+#call_button, #message, #url {
+	display: none;
+}
+
+#call_button {
+	width: 100%;
+}

@@ -1,0 +1,55 @@
+@charset "UTF-8";
+
+#modal, #qr_code {
+	position: absolute;
+}
+
+#modal {
+	left: 0;
+	top: 0;
+	background: rgba(0, 0, 0, 0.6);
+	height: 100vh;
+	width: 100%;
+	display: none;
+}
+
+#qr_code {
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+}
+
+#staff_qr, #user_qr {
+	width: 2rem;
+}
+
+#staff_url, #user_url {
+	display: none;
+}
+
+body {
+	margin: 8px;
+}
+
+canvas {
+	width: 80vmin;
+}
+
+td {
+	padding: 0.3rem;
+}
+
+.form-group dt {
+	font-size: 1.75rem;
+	padding: 0.5rem 1rem;
+	border-left: 12px double #007bff;
+	font-weight: unset;
+}
+
+.form-group dd {
+	margin-left: 40px;
+}
+
+.form-group label {
+	margin: 0.3rem;
+}

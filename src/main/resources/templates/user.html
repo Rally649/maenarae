@@ -1,43 +1,14 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
-<head th:replace="fragments/template :: head(title='ユーザ')">
+<head th:replace="fragments/template :: head(name='user', title='ユーザ')">
 </head>
-
-<style>
-#modal, #qr_code {
-	position: absolute;
-}
-
-#modal {
-	left: 0;
-	top: 0;
-	background: rgba(0, 0, 0, 0.6);
-	height: 100vh;
-	width: 100%;
-	display: none;
-}
-
-#qr_code {
-	left: 50%;
-	top: 50%;
-	transform: translate(-50%, -50%);
-}
-
-canvas {
-	width: 80vmin;
-}
-
-#user_qr {
-	width: 30px;
-}
-</style>
 
 <body>
 	<script>
 		$(function() {
-			var group = $("#group").text();
-			var seat = $("#seat").text();
+			var group = $("#group").val();
+			var seat = $("#seat").val();
 
 			var fn = {};
 
@@ -80,34 +51,42 @@ canvas {
 	</script>
 
 	<h1>スタッフ呼出順管理</h1>
-	<h2>
-		ユーザ用ページ<img id="user_qr" src="qr_code.png" />
-	</h2>
+	<dl class="form-group">
+		<dt>
+			ユーザ用ページ <img id="user_qr" src="qr_code.png" />
+		</dt>
+		<dd>
+			<form action="/user" method="get">
+				<table>
+					<tr>
+						<td><label for="group">グループID</label></td>
+						<td><input id="group" name="group" th:value="${group}"
+							class="form-control" readonly></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td><label for="seat">座席番号</label></td>
+						<td><input id="seat" name="seat" th:value="${seat}"
+							class="form-control" th:readonly="${! #strings.isEmpty(seat)}"></td>
+						<td><input type="submit" value="OK" class="btn btn-secondary"
+							th:if="${#strings.isEmpty(seat)}"></td>
+					</tr>
+					<tr th:if="${! #strings.isEmpty(seat)}">
+						<td></td>
+						<td><button id="call_button" class="btn btn-primary">呼出</button>
+							<div id="message">
+								呼び出し中です。<br>あなたの順番まで<span id="number_of_waiting"></span>人（30秒毎に自動更新）
+							</div></td>
+						<td></td>
+					</tr>
+				</table>
+			</form>
 
-	<table>
-		<tr>
-			<td>グループID</td>
-			<td><span id="group" th:text="${group}"></span></td>
-		</tr>
-		<tr>
-			<td>座席番号</td>
-			<td><span id="seat" th:text="${seat}"></span>
-				<form action="/user" method="get" th:if="${#strings.isEmpty(seat)}">
-					<input type="hidden" name="group" th:value="${group}"> <input
-						type="text" name="seat"> <input type="submit" value="OK">
-				</form></td>
-		</tr>
-	</table>
+		</dd>
+	</dl>
 
-	<p th:if="${! #strings.isEmpty(seat)}">
-	<div>
-		<button id="call_button" style="display: none">呼出</button>
-		<div id="message" style="display: none">
-			呼び出し中です。しばらくお待ち下さい。 (あと<span id="number_of_waiting"></span>人)
-		</div>
-	</div>
 
-	<span id="url" th:text="${user}" style="display: none;"></span>
+	<span id="url" th:text="${user}"></span>
 
 	<div id="modal">
 		<div id="qr_code"></div>

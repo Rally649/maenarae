@@ -1,0 +1,18 @@
+@charset "UTF-8";
+
+#group {
+	width: 21rem;
+}
+
+table.table {
+	width: fit-content;
+}
+
+ul {
+	list-style: none;
+	padding: unset;
+}
+
+li {
+	margin-bottom: 1rem;
+}

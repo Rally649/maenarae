@@ -1,0 +1,31 @@
+@charset "UTF-8";
+
+h3 {
+	padding: 0.5rem 1rem;
+	border-left: 4px solid #007bff;
+}
+
+ul {
+	list-style: none;
+}
+
+ul.list-striped {
+	margin-bottom: 1rem;
+	width: fit-content;
+}
+
+ul.list-striped>li:nth-child(odd) {
+	background: rgba(0, 0, 0, .05);
+}
+
+table.table {
+	width: auto;
+}
+
+.margin-left {
+	margin-left: 40px;
+}
+
+#group {
+	width: 21rem;
+}
