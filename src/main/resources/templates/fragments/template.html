@@ -4,6 +4,7 @@
 <head th:fragment="head(name, title)">
 <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
 <script src="js/jquery.qrcode.min.js"></script>
+<script th:src="${'/js/' + name + '.js'}"></script>
 <link rel="stylesheet"
 	th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
 <link rel="stylesheet" th:href="${'/css/common.css'}" />
