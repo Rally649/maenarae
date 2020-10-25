@@ -5,11 +5,11 @@ ul {
 	padding-left: 0;
 }
 
-ul.list-striped {
+.list-striped {
 	margin-bottom: 1rem;
 }
 
-ul.list-striped>li:nth-child(odd) {
+.list-striped>li:nth-child(odd) {
 	background: rgba(0, 0, 0, .08);
 }
 
