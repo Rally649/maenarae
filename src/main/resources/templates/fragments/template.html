@@ -14,4 +14,15 @@
 <title th:text="${'スタッフ呼出順管理 | ' + title}"></title>
 </head>
 
+<body>
+	<h1 th:fragment="title">
+		<a id="title_link"><img src="favicon.ico"></a><span>スタッフ呼出順管理</span>
+		<script>
+			$(function(){
+				$("#title_link").on("click", () => location.href = "/?group=" + $("#group").val());
+			});
+		</script>
+	</h1>
+</body>
+
 </html>

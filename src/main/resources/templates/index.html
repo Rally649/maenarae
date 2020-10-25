@@ -5,16 +5,14 @@
 </head>
 
 <body>
-	<h1>
-		<img src="favicon.ico"><span>スタッフ呼出順管理</span>
-	</h1>
+	<h1 th:replace="fragments/template :: title"></h1>
 
 	<dl class="main-content">
 		<dt>トップページ</dt>
 		<dd>
 			<div class="form-group form-inline">
 				<label for="group">グループID</label> <input id="group"
-					class="form-control" th:value="${uuid}" />
+					class="form-control" th:value="${group}" />
 			</div>
 
 			<div class="form-group form-inline">

@@ -22,6 +22,7 @@ import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -39,7 +40,7 @@ public class Main {
 	}
 
 	private enum Param {
-		GROUP, SEAT, UUID
+		GROUP, SEAT
 	}
 
 	public static void main(String[] args) throws Exception {
@@ -47,9 +48,9 @@ public class Main {
 	}
 
 	@RequestMapping("/")
-	String index(HttpServletRequest request, Model model) {
+	String index(HttpServletRequest request, Model model, String group) {
 		UUID uuid = UUID.randomUUID();
-		addAttribute(model, Param.UUID, uuid);
+		addAttribute(model, Param.GROUP, StringUtils.isEmpty(group) ? uuid : group);
 		setURL(request, model, Path.USER, Path.STAFF);
 		return getName(Path.INDEX);
 	}
