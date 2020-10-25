@@ -5,28 +5,28 @@
 </head>
 
 <body>
-	<h1>スタッフ呼出順管理</h1>
+	<h1>
+		<img src="favicon.ico"><span>スタッフ呼出順管理</span>
+	</h1>
 
-	<dl class="form-group">
+	<dl class="main-content">
 		<dt>トップページ</dt>
 		<dd>
-			<div class="form-inline">
+			<div class="form-group form-inline">
 				<label for="group">グループID</label> <input id="group"
 					class="form-control" th:value="${uuid}" />
 			</div>
 
-			<table>
-				<tr>
-					<td>スタッフ用ページ</td>
-					<td><img id="staff_qr" src="qr_code.png" /></td>
-					<td><a id="staff_link" target="_blank"></a></td>
-				</tr>
-				<tr>
-					<td>ユーザ用ページ</td>
-					<td><img id="user_qr" src="qr_code.png" /></td>
-					<td><a id="user_link" target="_blank"></a></td>
-				</tr>
-			</table>
+			<div class="form-group form-inline">
+				<label class="url-label">スタッフ用ページ</label> <img id="staff_qr"
+					src="qr_code.png" /> <a id="staff_link" target="_blank"></a>
+
+			</div>
+
+			<div class="form-group form-inline">
+				<label class="url-label">ユーザ用ページ</label> <img id="user_qr"
+					src="qr_code.png" /> <a id="user_link" target="_blank"></a>
+			</div>
 		</dd>
 	</dl>
 
@@ -37,155 +37,167 @@
 		<div id="qr_code"></div>
 	</div>
 
-	<h3>概要</h3>
-	<ul>
-		<li>スタッフの呼出順を管理する簡易的なシステムです。</li>
-		<li>ファミレスでボタンを押すと店員を呼べるシステムを想像して頂ければ、だいたいその通りです。</li>
-		<li>ユーザ用ページでスタッフ呼出を行い、スタッフ用ページで呼出一覧を確認できます。</li>
-		<li>利用場面として、大学のプログラミング演習（TA・メンター・チューターの呼出）のような、限られたスタッフ人数で、大勢のユーザの対応をする場面を想定しています。</li>
-		<li>「自分よりも後にスタッフを呼んだ人が、自分よりも先に対応されている」という状況を回避できます。</li>
-	</ul>
+	<hr>
 
-	<h3>使い方</h3>
-	<table class="table table-striped table-bordered margin-left">
-		<tr>
-			<td>代表の方</td>
-			<td>
-				<ol>
-					<li>
-						<dl>
-							<dt>グループIDを変更(任意)</dt>
-							<dd>
-								<ul>
-									<li>グループIDはUUIDを自動生成していますが、任意で変更が可能です。</li>
-									<li>設定したグループIDは、ユーザ用ページやスタッフ用ページで表示されます。</li>
-									<li>他グループとIDが一致しないように設定してください。</li>
-									<li>特にこだわりがない場合は、デフォルトのUUIDをご利用ください。</li>
-								</ul>
-							</dd>
-						</dl>
-					</li>
-					<li>
-						<dl>
-							<dt>生成されたスタッフ用・ユーザ用ページのURLを利用者で共有</dt>
-							<dd>
-								<ul>
-									<li>スタッフ、ユーザ問わず、全利用者で同じグループIDを共有して下さい。</li>
-									<li>一字でも異なると別グループとして扱われるため、URLのコピペやQRコードをご利用をお薦めします。</li>
-									<li>また、一度共有したURLは、ブックマーク登録して繰り返し使うことができます。</li>
-								</ul>
-							</dd>
-						</dl>
-					</li>
-				</ol>
-			</td>
-		</tr>
-		<tr>
-			<td>ユーザ</td>
-			<td>
-				<ol>
-					<li>
-						<dl>
-							<dt>ユーザ用ページに座席番号を入力</dt>
-							<dd>
-								<ul>
-									<li>どのユーザによる呼出か特定できる何らかの符号(座席番号、学籍番号下3桁など)を入力してください。</li>
-								</ul>
-							</dd>
-						</dl>
-					</li>
-					<li>
-						<dl>
-							<dt>任意タイミングで呼出ボタン押下</dt>
-							<dd>
-								<ul>
-									<li>自分を含めた待ち人数が30秒毎に更新されます。</li>
-									<li>また、呼出のデータはデータベース上で管理しているため、</li>
-									<li>Webブラウザを閉じても呼出はキャンセルされません。</li>
-								</ul>
-							</dd>
-						</dl>
-					</li>
-				</ol>
-			</td>
-		</tr>
-		<tr>
-			<td>スタッフ</td>
-			<td>
-				<ol>
-					<li>
-						<dl>
-							<dt>スタッフ用ページを開く</dt>
-							<dd>
-								<ul>
-									<li>画面は30秒ごとに自動更新しており、呼出が発生すると呼出時刻順に表示されます。</li>
-									<li>「呼出発生時にチャイムを鳴らす」がチェック済みなら、更新時にチャイムが鳴ります。</li>
-									<li>ただし、パソコンがスリープ状態などの場合は更新されないため、ご注意ください。</li>
-								</ul>
-							</dd>
-						</dl>
-					</li>
-					<li>
-						<dl>
-							<dt>対応済み座席番号の削除ボタン押下</dt>
-							<dd>
-								<ul>
-									<li>削除後、他スタッフの画面にも同様に反映されます。</li>
-								</ul>
-							</dd>
-						</dl>
-					</li>
-				</ol>
-			</td>
-		</tr>
-	</table>
+	<details>
+		<summary>詳細な説明</summary>
+		<h2>概要</h2>
+		<ul class="list-group list-striped">
+			<li>スタッフの呼出順を管理する簡易的なシステムです。</li>
+			<li>ファミレスでボタンを押すと店員を呼べるシステムを想像して頂ければ、だいたいその通りです。</li>
+			<li>ユーザ用ページでスタッフ呼出を行い、スタッフ用ページで呼出一覧を確認できます。</li>
+			<li>利用場面として、大学のプログラミング演習（TA・メンター・チューターの呼出）のような、限られたスタッフ人数で、大勢のユーザの対応をする場面を想定しています。</li>
+			<li>「自分よりも後にスタッフを呼んだ人が、自分よりも先に対応されている」という状況を回避できます。</li>
+		</ul>
 
-	<h3>注意事項</h3>
-	<ul class="list-group list-striped margin-left">
-		<li class="list-group-item">JavaScriptを利用するため、無効設定は解除してください。</li>
-		<li class="list-group-item">24時間経過した呼出は自動削除されます。</li>
-		<li class="list-group-item">グループIDや座席番号はURLのクエリパラメータで保持するため、通信ログに残ります。個人情報の入力はお控えください。</li>
-		<li class="list-group-item">グループIDがすべての利用者で完全一致している必要があります。異なる場合は呼出がスタッフ用ページに反映されないため、グループIDの共有は厳密に実施してください。</li>
-		<li class="list-group-item">グループIDが特定されると外部からユーザ用ページやスタッフ用ページを介して操作できてしまうため、セキュリティ面を重視する場合はご利用をお控えください。</li>
-		<li class="list-group-item">このシステムは、事前の予告無しに仕様変更や稼働停止する可能性があります。また、このシステムによる、いかなる損害や不利益の責任は負いかねます。予めご了承ください。</li>
-	</ul>
+		<h2>使い方</h2>
 
-	<h3>クレジット表記</h3>
-	<ul>
-		<li>
-			<dl>
-				<dt>QRコードの生成</dt>
-				<dd>
-					<ul>
-						<li>jeromeetienne/jquery-qrcode</li>
-						<li><a href="https://github.com/jeromeetienne/jquery-qrcode"
-							target="_blank">https://github.com/jeromeetienne/jquery-qrcode</a></li>
-					</ul>
-				</dd>
-			</dl>
-		</li>
+		<ul class="list-striped">
+			<li class="list-group-item">
+				<dl>
+					<dt>代表の方</dt>
+					<dd>
+						<ol>
+							<li>
+								<dl>
+									<dt>グループIDを変更(任意)</dt>
+									<dd>
+										<ul>
+											<li>グループIDはUUIDを自動生成していますが、任意で変更が可能です。</li>
+											<li>設定したグループIDは、ユーザ用ページやスタッフ用ページで表示されます。</li>
+											<li>他グループとIDが一致しないように設定してください。</li>
+											<li>特にこだわりがない場合は、デフォルトのUUIDをご利用ください。</li>
+										</ul>
+									</dd>
+								</dl>
+							</li>
+							<li>
+								<dl>
+									<dt>生成されたスタッフ用・ユーザ用ページのURLを利用者で共有</dt>
+									<dd>
+										<ul>
+											<li>スタッフ、ユーザ問わず、全利用者で同じグループIDを共有して下さい。</li>
+											<li>一字でも異なると別グループとして扱われるため、URLのコピペやQRコードをご利用をお薦めします。</li>
+											<li>また、一度共有したURLは、ブックマーク登録して繰り返し使うことができます。</li>
+										</ul>
+									</dd>
+								</dl>
+							</li>
+						</ol>
+					</dd>
+				</dl>
+			</li>
+			<li class="list-group-item">
+				<dl>
+					<dt>ユーザ</dt>
+					<dd>
+						<ol>
+							<li>
+								<dl>
+									<dt>ユーザ用ページに座席番号を入力</dt>
+									<dd>
+										<ul>
+											<li>どのユーザによる呼出か特定できる何らかの符号(座席番号、学籍番号下3桁など)を入力してください。</li>
+										</ul>
+									</dd>
+								</dl>
+							</li>
+							<li>
+								<dl>
+									<dt>任意タイミングで呼出ボタン押下</dt>
+									<dd>
+										<ul>
+											<li>自分を含めた待ち人数が30秒毎に更新されます。</li>
+											<li>また、呼出のデータはデータベース上で管理しているため、</li>
+											<li>Webブラウザを閉じても呼出はキャンセルされません。</li>
+										</ul>
+									</dd>
+								</dl>
+							</li>
+						</ol>
+					</dd>
+				</dl>
+			</li>
+			<li class="list-group-item">
+				<dl>
+					<dt>スタッフ</dt>
+					<dd>
+						<ol>
+							<li>
+								<dl>
+									<dt>スタッフ用ページを開く</dt>
+									<dd>
+										<ul>
+											<li>画面は30秒ごとに自動更新しており、呼出が発生すると呼出時刻順に表示されます。</li>
+											<li>「呼出発生時にチャイムを鳴らす」がチェック済みなら、更新時にチャイムが鳴ります。</li>
+											<li>ただし、パソコンがスリープ状態などの場合は更新されないため、ご注意ください。</li>
+										</ul>
+									</dd>
+								</dl>
+							</li>
+							<li>
+								<dl>
+									<dt>対応済み座席番号の削除ボタン押下</dt>
+									<dd>
+										<ul>
+											<li>削除後、他スタッフの画面にも同様に反映されます。</li>
+										</ul>
+									</dd>
+								</dl>
+							</li>
+						</ol>
+					</dd>
+				</dl>
+			</li>
+		</ul>
 
-		<li>
-			<dl>
-				<dt>スタッフ用ページのチャイム</dt>
-				<dd>
-					<ul>
-						<li>On-Jin～音人～</li>
-						<li><a href="https://on-jin.com/sound/index.php"
-							target="_blank">https://on-jin.com/sound/index.php</a></li>
-						<li>チャイム・インターホン02</li>
-					</ul>
-				</dd>
-			</dl>
-		</li>
-	</ul>
+		<h2>注意事項</h2>
+		<ul class="list-group list-striped">
+			<li class="list-group-item">JavaScriptを利用するため、無効設定は解除してください。</li>
+			<li class="list-group-item">24時間経過した呼出は自動削除されます。</li>
+			<li class="list-group-item">グループIDや座席番号はURLのクエリパラメータで保持するため、通信ログに残ります。個人情報の入力はお控えください。</li>
+			<li class="list-group-item">グループIDがすべての利用者で完全一致している必要があります。異なる場合は呼出がスタッフ用ページに反映されないため、グループIDの共有は厳密に実施してください。</li>
+			<li class="list-group-item">グループIDが特定されると外部からユーザ用ページやスタッフ用ページを介して操作できてしまうため、セキュリティ面を重視する場合はご利用をお控えください。</li>
+			<li class="list-group-item">このシステムは、事前の予告無しに仕様変更や稼働停止する可能性があります。また、このシステムによる、いかなる損害や不利益の責任は負いかねます。予めご了承ください。</li>
+		</ul>
+
+		<h2>クレジット表記</h2>
+		<ul class="list-group list-striped">
+			<li class="list-group-item">
+				<dl>
+					<dt>QRコードの生成</dt>
+					<dd>
+						<ul>
+							<li>jeromeetienne/jquery-qrcode</li>
+							<li><a href="https://github.com/jeromeetienne/jquery-qrcode"
+								target="_blank">https://github.com/jeromeetienne/jquery-qrcode</a></li>
+						</ul>
+					</dd>
+				</dl>
+			</li>
+
+			<li class="list-group-item">
+				<dl>
+					<dt>スタッフ用ページのチャイム</dt>
+					<dd>
+						<ul>
+							<li>On-Jin～音人～</li>
+							<li><a href="https://on-jin.com/sound/index.php"
+								target="_blank">https://on-jin.com/sound/index.php</a></li>
+							<li>チャイム・インターホン02</li>
+						</ul>
+					</dd>
+				</dl>
+			</li>
+		</ul>
 
 
-	<h3>連絡先</h3>
-	<ul>
-		<li>ご意見・ご要望などは下記までご連絡ください。</li>
-		<li><div>rally.elspあぁっとおぉgmail.com</div></li>
-	</ul>
+		<h2>連絡先</h2>
+		<ul>
+			<li>ご意見・ご要望は下記までご連絡ください。</li>
+			<li><div>rally.elspあぁっとおぉgmail.com</div></li>
+		</ul>
+	</details>
 
 </body>
 </html>

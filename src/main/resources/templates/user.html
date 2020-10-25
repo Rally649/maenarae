@@ -5,38 +5,41 @@
 </head>
 
 <body>
-	<h1>スタッフ呼出順管理</h1>
-	<dl class="form-group">
+	<h1>
+		<img src="favicon.ico"><span>スタッフ呼出順管理</span>
+	</h1>
+
+	<dl class="main-content">
 		<dt>
 			ユーザ用ページ <img id="user_qr" src="qr_code.png" />
 		</dt>
 		<dd>
 			<form action="/user" method="get">
-				<table>
-					<tr>
-						<td><label for="group">グループID</label></td>
-						<td><input id="group" name="group" th:value="${group}"
-							class="form-control" readonly></td>
-						<td></td>
-					</tr>
-					<tr>
-						<td><label for="seat">座席番号</label></td>
-						<td><input id="seat" name="seat" th:value="${seat}"
-							class="form-control" th:readonly="${! #strings.isEmpty(seat)}"></td>
-						<td><input type="submit" value="OK" class="btn btn-secondary"
-							th:if="${#strings.isEmpty(seat)}"></td>
-					</tr>
-					<tr th:if="${! #strings.isEmpty(seat)}">
-						<td></td>
-						<td><button id="call_button" class="btn btn-primary">呼出</button>
-							<div id="message">
-								呼び出し中です。<br>あなたの順番まで<span id="number_of_waiting"></span>人（30秒毎に自動更新）
-							</div></td>
-						<td></td>
-					</tr>
-				</table>
-			</form>
+				<div class="form-group form-inline">
+					<label class="label" for="group">グループID</label> <input id="group"
+						name="group" th:value="${group}" class="form-control" readonly>
+				</div>
 
+				<div class="form-group form-inline">
+					<label class="label" for="seat">座席番号</label> <input id="seat"
+						name="seat" th:value="${seat}" class="form-control"
+						th:readonly="${! #strings.isEmpty(seat)}">
+				</div>
+
+				<div class="align-right" th:if="${#strings.isEmpty(seat)}">
+					<input id="ok_button" type="submit" value="OK"
+						class="btn btn-secondary">
+				</div>
+
+
+				<div class="align-right" th:if="${! #strings.isEmpty(seat)}">
+					<button id="call_button" class="btn btn-primary">呼出</button>
+
+					<label id="message" class="align-left"> 呼び出し中です。<br>あなたの順番まで
+						<span id="number_of_waiting"></span>人（30秒毎に自動更新）
+					</label>
+				</div>
+			</form>
 		</dd>
 	</dl>
 
@@ -45,6 +48,8 @@
 	<div id="modal">
 		<div id="qr_code"></div>
 	</div>
+
+	<hr>
 
 </body>
 </html>

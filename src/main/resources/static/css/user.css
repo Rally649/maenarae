@@ -1,6 +1,6 @@
 @charset "UTF-8";
 
-body {
+dl {
 	width: fit-content;
 }
 
@@ -8,11 +8,7 @@ dt {
 	font-size: 1.2rem;
 }
 
-dd {
-	margin-left: 40px;
-}
-
-#group, #seat {
+#group, #seat, #ok_button, #call_button, #message {
 	width: 21rem;
 }
 
@@ -20,6 +16,14 @@ dd {
 	display: none;
 }
 
-#call_button {
-	width: 100%;
+.align-right {
+	text-align: right;
+}
+
+.align-left {
+	text-align: left;
+}
+
+.label {
+	width: 5rem;
 }
