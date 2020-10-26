@@ -4,8 +4,15 @@
 	width: 21rem;
 }
 
-table.table {
+.main-content {
 	width: fit-content;
+}
+
+.table td, .table th {
+	padding: 0.3rem;
+	text-align: center;
+	vertical-align: middle;
+	height: 100%;
 }
 
 ul {
