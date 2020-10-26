@@ -28,3 +28,7 @@ ol {
 .url-label {
 	width: 8rem;
 }
+
+.btn {
+	white-space: normal;
+}
