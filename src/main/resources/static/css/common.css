@@ -45,6 +45,7 @@ h1 {
 
 h1 img {
 	width: 28px;
+	margin-right: 0.3rem;
 }
 
 h2 {
@@ -54,8 +55,8 @@ h2 {
 	margin-top: 2rem;
 }
 
-.form-inline label, img, a {
-	margin-right: 0.3rem;
+.form-inline * {
+	margin: 0.1rem 0.3rem;
 }
 
 .main-content dt {
@@ -63,6 +64,14 @@ h2 {
 	font-size: 1.5rem;
 	font-weight: unset;
 	margin-bottom: 0.5rem;
+}
+
+.main-content dt>img {
+	margin: 0.3rem;
+}
+
+.list-striped>li:nth-child(odd) {
+	background: rgba(0, 0, 0, .08);
 }
 
 .no-wrap {
