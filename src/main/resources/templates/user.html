@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
-<head th:replace="fragments/template :: head(name='user', title='スタッフ呼出')">
+<head
+	th:replace="fragments/template :: head(name='user', title='スタッフ呼出')">
 </head>
 
 <body>
@@ -21,7 +22,7 @@
 				<div class="form-group form-inline">
 					<label class="label" for="seat">座席番号</label> <input id="seat"
 						name="seat" th:value="${seat}" class="form-control"
-						th:readonly="${! #strings.isEmpty(seat)}">
+						th:readonly="${! #strings.isEmpty(seat)}" autofocus>
 				</div>
 
 				<div class="form-group form-inline"
