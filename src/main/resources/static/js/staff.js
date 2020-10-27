@@ -19,21 +19,23 @@ $(function() {
 	fn.updateCalls = function(isUseingChime) {
 		fn.ajax("/getCalls", "", function(calls) {
 			$("#calls tr").not("#caption").remove();
-			calls.forEach(function(call) {
+			calls.forEach(function(call, index) {
 				var seat = call.seat;
 				var time = call.callTime;
+
+				var buttonId = "call-" + index;
 
 				var row = "<tr>";
 				row += "<td>" + seat + "</td>";
 				row += "<td>" + time + "</td>";
-				row += "<td><button id='" + seat + "' class='btn btn-danger'>削除</button></td>";
+				row += "<td><button id='" + buttonId + "' class='btn btn-danger'>削除</button></td>";
 				row += "</tr>";
 				$("#calls").append(row);
 
 				var message = "「" + seat + "」を削除しますか？";
 				const updateCalls = () => fn.updateCalls(false);
 				const deleteCall = () => fn.ajax("deleteCall", seat, updateCalls);
-				$("#" + seat).on("click", () => confirm(message) && deleteCall());
+				$("#" + buttonId).on("click", () => confirm(message) && deleteCall());
 			});
 
 			clearTimeout(timeout);
