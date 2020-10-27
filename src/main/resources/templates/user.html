@@ -30,17 +30,17 @@
 					<label class="label"></label> <input id="ok_button" type="submit"
 						value="OK" class="btn btn-secondary">
 				</div>
-
-				<div class="form-group form-inline"
-					th:if="${! #strings.isEmpty(seat)}">
-					<label class="label"></label>
-					<button id="call_button" class="btn btn-primary">呼出</button>
-
-					<label id="message"> 呼び出し中です。<br>あなたの順番まで <span
-						id="number_of_waiting"></span>人（30秒毎に自動更新）
-					</label>
-				</div>
 			</form>
+
+			<div class="form-group form-inline"
+				th:if="${! #strings.isEmpty(seat)}">
+				<label class="label"></label>
+				<button id="call_button" class="btn btn-primary">呼出</button>
+
+				<label id="message"> 呼び出し中です。<br>あなたの順番まで <span
+					id="number_of_waiting"></span>人（30秒毎に自動更新）
+				</label>
+			</div>
 		</dd>
 	</dl>
 
