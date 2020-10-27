@@ -22,12 +22,13 @@ $(function() {
 			calls.forEach(function(call, index) {
 				var group = call.group;
 				var seat = call.seat;
+				var sanitizedSeat = call.sanitizedSeat;
 				var time = call.callTime;
 
 				var buttonId = "call-" + index;
 
 				var row = "<tr>";
-				row += "<td>" + seat + "</td>";
+				row += "<td>" + sanitizedSeat + "</td>";
 				row += "<td>" + time + "</td>";
 				row += "<td><button id='" + buttonId + "' class='btn btn-danger'>削除</button></td>";
 				row += "</tr>";

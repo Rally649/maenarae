@@ -2,8 +2,6 @@ package com.herokuapp.maenarae;
 
 import java.util.List;
 
-import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.text.StringEscapeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,7 +17,7 @@ public class Rest {
 
 	@RequestMapping("/getCalls")
 	List<StaffCall> getCalls(@RequestParam String group) {
-		List<StaffCall> calls = dao.getCallList(sanitize(group));
+		List<StaffCall> calls = dao.getCallList(group);
 		return calls;
 	}
 
@@ -31,21 +29,13 @@ public class Rest {
 
 	@RequestMapping("/callStaff")
 	String callStaff(@RequestParam String group, @RequestParam String seat) {
-		dao.recordCall(sanitize(group), sanitize(seat));
+		dao.recordCall(group, seat);
 		return "Done.";
 	}
 
 	@RequestMapping("/getNumberOfWaiting")
 	int getNumberOfWaiting(@RequestParam String group, @RequestParam String seat) {
-		int num = dao.getNumberOfWaiting(sanitize(group), sanitize(seat));
+		int num = dao.getNumberOfWaiting(group, seat);
 		return num;
-	}
-
-	private String sanitize(String str) {
-		return StringEscapeUtils.escapeHtml4(escapeNull(str));
-	}
-
-	private String escapeNull(String str) {
-		return StringUtils.isEmpty(str) ? StringUtils.EMPTY : str;
 	}
 }

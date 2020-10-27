@@ -2,12 +2,15 @@ package com.herokuapp.maenarae.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.text.StringEscapeUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -83,11 +86,25 @@ public class QueueDAO extends AbstractDAO {
 						while (rs.next()) {
 							String group = rs.getString("group");
 							String seat = rs.getString("seat");
-							Date callTime = rs.getTimestamp("call_time");
-							StaffCall call = new StaffCall(group, seat, callTime);
+							String sanitizedSeat = sanitize(seat);
+							String callTime = format(rs.getTimestamp("call_time"));
+							StaffCall call = new StaffCall(group, seat, sanitizedSeat, callTime);
 							calls.add(call);
 						}
 						return calls;
+					}
+
+					private String sanitize(String str) {
+						return StringEscapeUtils.escapeHtml4(escapeNull(str));
+					}
+
+					private String escapeNull(String str) {
+						return StringUtils.isEmpty(str) ? StringUtils.EMPTY : str;
+					}
+
+					private String format(Date time) {
+						SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+						return df.format(time);
 					}
 				};
 				List<StaffCall> calls = executeQuery(converter, sql, group);
