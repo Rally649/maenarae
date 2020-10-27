@@ -1,0 +1,7 @@
+{
+	"name": "maenarae",
+	"description": "Staff call order management system.",
+	"addons": [
+		"cleardb-shallow-96255"
+	]
+}
