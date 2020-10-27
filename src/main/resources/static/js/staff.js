@@ -1,8 +1,6 @@
 $(function() {
-	var group = $("#group").val();
-
 	var fn = {};
-	fn.ajax = function(url, seat, success) {
+	fn.ajax = function(url, group, seat, success) {
 		$.ajax({
 			url: url,
 			type: "POST",
@@ -17,9 +15,12 @@ $(function() {
 	var audio = new Audio("chime.mp3");
 
 	fn.updateCalls = function(isUseingChime) {
-		fn.ajax("/getCalls", "", function(calls) {
+		var group = $("#group").val();
+		var seat = "";
+		fn.ajax("/getCalls", group, seat, function(calls) {
 			$("#calls tr").not("#caption").remove();
 			calls.forEach(function(call, index) {
+				var group = call.group;
 				var seat = call.seat;
 				var time = call.callTime;
 
@@ -34,7 +35,7 @@ $(function() {
 
 				var message = "「" + seat + "」を削除しますか？";
 				const updateCalls = () => fn.updateCalls(false);
-				const deleteCall = () => fn.ajax("deleteCall", seat, updateCalls);
+				const deleteCall = () => fn.ajax("deleteCall", group, seat, updateCalls);
 				$("#" + buttonId).on("click", () => confirm(message) && deleteCall());
 			});
 
@@ -49,6 +50,7 @@ $(function() {
 
 	fn.updateCalls(false);
 
+	var group = $("#group").val();
 	var url = $("#url").text() + group;
 	$("#qr_code").qrcode({ text: url });
 	$("#staff_qr").on("click", () => $("#modal").fadeIn());

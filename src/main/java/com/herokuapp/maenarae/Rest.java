@@ -25,7 +25,7 @@ public class Rest {
 
 	@RequestMapping("/deleteCall")
 	String deleteCall(@RequestParam String group, @RequestParam String seat) {
-		dao.deleteCall(sanitize(group), seat);
+		dao.deleteCall(group, seat);
 		return "Done.";
 	}
 

@@ -75,15 +75,16 @@ public class QueueDAO extends AbstractDAO {
 		List<StaffCall> calls = executeFlow(new Flow<List<StaffCall>>() {
 			@Override
 			public List<StaffCall> execute() {
-				String sql = "select `seat`, `call_time` from `queue` where `group` = ? order by `call_time`;";
+				String sql = "select `group`, `seat`, `call_time` from `queue` where `group` = ? order by `call_time`;";
 				Converter<List<StaffCall>> converter = new Converter<List<StaffCall>>() {
 					@Override
 					public List<StaffCall> convert(ResultSet rs) throws SQLException {
 						List<StaffCall> calls = new ArrayList<>();
 						while (rs.next()) {
+							String group = rs.getString("group");
 							String seat = rs.getString("seat");
 							Date callTime = rs.getTimestamp("call_time");
-							StaffCall call = new StaffCall(seat, callTime);
+							StaffCall call = new StaffCall(group, seat, callTime);
 							calls.add(call);
 						}
 						return calls;
