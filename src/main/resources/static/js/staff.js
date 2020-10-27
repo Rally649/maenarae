@@ -14,7 +14,7 @@ $(function() {
 	var timeout;
 	var audio = new Audio("chime.mp3");
 
-	fn.updateCalls = function(isUseingChime) {
+	fn.updateCalls = function(isUsingChime) {
 		var group = $("#group").val();
 		var seat = "";
 		fn.ajax("/getCalls", group, seat, function(calls) {
@@ -43,7 +43,7 @@ $(function() {
 			clearTimeout(timeout);
 			timeout = setTimeout(() => fn.updateCalls(true), 30000);
 
-			if (isUseingChime && calls.length > 0 && $("#chime_check").is(":checked")) {
+			if (isUsingChime && calls.length > 0 && $("#chime_check").is(":checked")) {
 				audio.play();
 			}
 		});
