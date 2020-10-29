@@ -15,7 +15,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import com.herokuapp.maenarae.json.StaffCall;
+import com.herokuapp.maenarae.json.FormattedStaffCall;
 
 @Component
 public class QueueDAO extends AbstractDAO {
@@ -74,21 +74,21 @@ public class QueueDAO extends AbstractDAO {
 		return num;
 	}
 
-	public List<StaffCall> getCallList(String group) {
-		List<StaffCall> calls = executeFlow(new Flow<List<StaffCall>>() {
+	public List<FormattedStaffCall> getCalls(String group) {
+		List<FormattedStaffCall> calls = executeFlow(new Flow<List<FormattedStaffCall>>() {
 			@Override
-			public List<StaffCall> execute() {
+			public List<FormattedStaffCall> execute() {
 				String sql = "select `group`, `seat`, `call_time` from `queue` where `group` = ? order by `call_time`;";
-				Converter<List<StaffCall>> converter = new Converter<List<StaffCall>>() {
+				Converter<List<FormattedStaffCall>> converter = new Converter<List<FormattedStaffCall>>() {
 					@Override
-					public List<StaffCall> convert(ResultSet rs) throws SQLException {
-						List<StaffCall> calls = new ArrayList<>();
+					public List<FormattedStaffCall> convert(ResultSet rs) throws SQLException {
+						List<FormattedStaffCall> calls = new ArrayList<>();
 						while (rs.next()) {
 							String group = rs.getString("group");
 							String seat = rs.getString("seat");
 							String sanitizedSeat = sanitize(seat);
 							String callTime = format(rs.getTimestamp("call_time"));
-							StaffCall call = new StaffCall(group, seat, sanitizedSeat, callTime);
+							FormattedStaffCall call = new FormattedStaffCall(group, seat, sanitizedSeat, callTime);
 							calls.add(call);
 						}
 						return calls;
@@ -107,7 +107,7 @@ public class QueueDAO extends AbstractDAO {
 						return df.format(time);
 					}
 				};
-				List<StaffCall> calls = executeQuery(converter, sql, group);
+				List<FormattedStaffCall> calls = executeQuery(converter, sql, group);
 				return calls;
 			}
 		});
