@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.herokuapp.maenarae.dao.QueueDAO;
-import com.herokuapp.maenarae.json.StaffCall;
+import com.herokuapp.maenarae.json.FormattedStaffCall;
 
 @RestController
 public class Rest {
@@ -16,8 +16,8 @@ public class Rest {
 	private QueueDAO dao;
 
 	@RequestMapping("/getCalls")
-	List<StaffCall> getCalls(@RequestParam String group) {
-		List<StaffCall> calls = dao.getCallList(group);
+	List<FormattedStaffCall> getCalls(@RequestParam String group) {
+		List<FormattedStaffCall> calls = dao.getCalls(group);
 		return calls;
 	}
 
