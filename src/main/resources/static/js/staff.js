@@ -25,7 +25,8 @@ $(function() {
 				var DD = slice(date.getDate());
 				var hh = slice(date.getHours());
 				var mm = slice(date.getMinutes());
-				return YYYY + "-" + MM + "-" + DD + " " + hh + ":" + mm;
+				var ss = slice(date.getSeconds());
+				return YYYY + "-" + MM + "-" + DD + " " + hh + ":" + mm + ":" + ss;
 			}
 
 			$("#calls tr").not("#caption").remove();
