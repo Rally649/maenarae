@@ -9,7 +9,7 @@ public interface StaffCallRepository extends JpaRepository<StaffCall, StaffCallP
 
 	List<StaffCall> findByGroupIdOrderByCallTime(String groupId);
 
-	int countByGroupIdAndCallTimeLessThanEqual(String group, Date callTime);
+	int countByGroupIdAndCallTimeLessThanEqual(String groupId, Date callTime);
 
 	long deleteByCallTimeBefore(Date callTime);
 }

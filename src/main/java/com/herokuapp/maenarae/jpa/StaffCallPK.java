@@ -14,5 +14,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class StaffCallPK implements Serializable {
 	private String groupId;
-	private String seat;
+	private String seatId;
 }

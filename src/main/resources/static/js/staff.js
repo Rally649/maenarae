@@ -4,10 +4,7 @@ $(function() {
 		$.ajax({
 			url: url,
 			type: "POST",
-			data: {
-				group: group,
-				seat: seat
-			}
+			data: { group: group, seat: seat }
 		}).done(data => success(data));
 	}
 
@@ -34,7 +31,7 @@ $(function() {
 			$("#calls tr").not("#caption").remove();
 			calls.forEach(function(call) {
 				var group = call.groupId;
-				var seat = call.seat;
+				var seat = call.seatId;
 				var time = format(call.callTime);
 
 				var tr = $("<tr>").appendTo($("#calls"));

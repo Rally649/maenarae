@@ -16,36 +16,36 @@ import lombok.RequiredArgsConstructor;
 public class StaffCallService {
 	private final StaffCallRepository repository;
 
-	public List<StaffCall> getCalls(String group) {
-		List<StaffCall> calls = repository.findByGroupIdOrderByCallTime(group);
+	public List<StaffCall> getCalls(String groupId) {
+		List<StaffCall> calls = repository.findByGroupIdOrderByCallTime(groupId);
 		return calls;
 	}
 
-	public void deleteCall(String group, String seat) {
-		StaffCallPK id = new StaffCallPK(group, seat);
+	public void deleteCall(String groupId, String seatId) {
+		StaffCallPK id = new StaffCallPK(groupId, seatId);
 		if (repository.existsById(id)) {
 			repository.deleteById(id);
 		}
 	}
 
-	public void recordCall(String group, String seat) {
-		StaffCallPK id = new StaffCallPK(group, seat);
+	public void recordCall(String groupId, String seatId) {
+		StaffCallPK id = new StaffCallPK(groupId, seatId);
 		if (!repository.existsById(id)) {
 			Calendar current = Calendar.getInstance();
 			Date callTime = current.getTime();
-			StaffCall call = new StaffCall(group, seat, callTime);
+			StaffCall call = new StaffCall(groupId, seatId, callTime);
 			repository.save(call);
 		}
 	}
 
-	public int getNumberOfWaiting(String group, String seat) {
-		StaffCallPK id = new StaffCallPK(group, seat);
+	public int getNumberOfWaiting(String groupId, String seatId) {
+		StaffCallPK id = new StaffCallPK(groupId, seatId);
 		Optional<StaffCall> call = repository.findById(id);
 		if (!call.isPresent()) {
 			return 0;
 		}
 		Date callTime = call.get().getCallTime();
-		int num = repository.countByGroupIdAndCallTimeLessThanEqual(group, callTime);
+		int num = repository.countByGroupIdAndCallTimeLessThanEqual(groupId, callTime);
 		return num;
 	}
 

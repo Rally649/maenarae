@@ -19,6 +19,6 @@ public class StaffCall {
 	@Id
 	private String groupId;
 	@Id
-	private String seat;
+	private String seatId;
 	private Date callTime;
 }
