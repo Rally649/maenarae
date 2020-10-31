@@ -51,7 +51,6 @@ public class Main {
 		addAttribute(model, Param.GROUP, group);
 		addAttribute(model, Param.SEAT, seat);
 		return "user";
-
 	}
 
 	@RequestMapping("/staff")
