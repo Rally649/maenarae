@@ -9,7 +9,6 @@ import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.text.StringEscapeUtils;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -53,7 +52,7 @@ public class StaffCallService {
 	}
 
 	public void recordCall(String group, String seat) {
-		Calendar current = getCurrent();
+		Calendar current = Calendar.getInstance();
 		Date callTime = current.getTime();
 		StaffCall call = new StaffCall(group, seat, callTime);
 		repository.save(call);
@@ -73,18 +72,9 @@ public class StaffCallService {
 	@Scheduled(cron = "0 0 * * * *", zone = "Asia/Tokyo")
 	@Transactional
 	public void takeInventory() {
-		Calendar now = getCurrent();
-		now.add(Calendar.DATE, -1);
-		Date callTime = now.getTime();
-		repository.deleteByCallTimeBefore(callTime);
-	}
-
-	@Value("${time.difference.hour}")
-	private int timeDiff;
-
-	private Calendar getCurrent() {
 		Calendar current = Calendar.getInstance();
-		current.add(Calendar.HOUR, timeDiff);
-		return current;
+		current.add(Calendar.DATE, -1);
+		Date callTime = current.getTime();
+		repository.deleteByCallTimeBefore(callTime);
 	}
 }
