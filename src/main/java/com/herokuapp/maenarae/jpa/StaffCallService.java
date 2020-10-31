@@ -29,10 +29,13 @@ public class StaffCallService {
 	}
 
 	public void recordCall(String group, String seat) {
-		Calendar current = Calendar.getInstance();
-		Date callTime = current.getTime();
-		StaffCall call = new StaffCall(group, seat, callTime);
-		repository.save(call);
+		StaffCallPK id = new StaffCallPK(group, seat);
+		if (!repository.existsById(id)) {
+			Calendar current = Calendar.getInstance();
+			Date callTime = current.getTime();
+			StaffCall call = new StaffCall(group, seat, callTime);
+			repository.save(call);
+		}
 	}
 
 	public int getNumberOfWaiting(String group, String seat) {
