@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.herokuapp.maenarae.jpa.StaffCall;
 import com.herokuapp.maenarae.jpa.StaffCallService;
-import com.herokuapp.maenarae.json.FormattedStaffCall;
 
 @RestController
 public class Rest {
@@ -16,8 +16,8 @@ public class Rest {
 	private StaffCallService service;
 
 	@RequestMapping("/getCalls")
-	List<FormattedStaffCall> getCalls(@RequestParam String group) {
-		List<FormattedStaffCall> calls = service.getCalls(group);
+	List<StaffCall> getCalls(@RequestParam String group) {
+		List<StaffCall> calls = service.getCalls(group);
 		return calls;
 	}
 

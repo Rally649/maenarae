@@ -18,26 +18,35 @@ $(function() {
 		var group = $("#group").val();
 		var seat = "";
 		fn.ajax("/getCalls", group, seat, function(calls) {
+
+			const format = function(callTime) {
+				const slice = num => ("0" + num).slice(-2);
+
+				var date = new Date(callTime);
+				var YYYY = date.getFullYear();
+				var MM = slice(date.getMonth());
+				var DD = slice(date.getDate());
+				var hh = slice(date.getHours());
+				var mm = slice(date.getMinutes());
+				return YYYY + "-" + MM + "-" + DD + " " + hh + ":" + mm;
+			}
+
 			$("#calls tr").not("#caption").remove();
-			calls.forEach(function(call, index) {
-				var group = call.group;
+			calls.forEach(function(call) {
+				var group = call.groupId;
 				var seat = call.seat;
-				var sanitizedSeat = call.sanitizedSeat;
-				var time = call.callTime;
+				var time = format(call.callTime);
 
-				var buttonId = "call-" + index;
-
-				var row = "<tr>";
-				row += "<td>" + sanitizedSeat + "</td>";
-				row += "<td>" + time + "</td>";
-				row += "<td><button id='" + buttonId + "' class='btn btn-danger'>削除</button></td>";
-				row += "</tr>";
-				$("#calls").append(row);
+				var tr = $("<tr>").appendTo($("#calls"));
+				$("<td>").text(seat).appendTo(tr);
+				$("<td>").text(time).appendTo(tr);
 
 				var message = "「" + seat + "」を削除しますか？";
 				const updateCalls = () => fn.updateCalls(false);
 				const deleteCall = () => fn.ajax("deleteCall", group, seat, updateCalls);
-				$("#" + buttonId).on("click", () => confirm(message) && deleteCall());
+				const buttonAction = () => confirm(message) && deleteCall();
+				var button = $("<button>").text("削除").addClass("btn btn-danger").on("click", buttonAction);
+				button.appendTo($("<td>").appendTo(tr));
 			});
 
 			clearTimeout(timeout);

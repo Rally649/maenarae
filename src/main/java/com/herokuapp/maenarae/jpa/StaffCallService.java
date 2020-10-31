@@ -1,19 +1,13 @@
 package com.herokuapp.maenarae.jpa;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
-import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.text.StringEscapeUtils;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import com.herokuapp.maenarae.json.FormattedStaffCall;
 
 import lombok.RequiredArgsConstructor;
 
@@ -22,26 +16,9 @@ import lombok.RequiredArgsConstructor;
 public class StaffCallService {
 	private final StaffCallRepository repository;
 
-	public List<FormattedStaffCall> getCalls(String group) {
+	public List<StaffCall> getCalls(String group) {
 		List<StaffCall> calls = repository.findByGroupIdOrderByCallTime(group);
-		List<FormattedStaffCall> formatted = calls.stream().map(this::format).collect(Collectors.toList());
-		return formatted;
-	}
-
-	private FormattedStaffCall format(StaffCall call) {
-		String group = call.getGroupId();
-		String seat = call.getSeat();
-		String sanitizedSeat = sanitize(seat);
-		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		String callTime = df.format(call.getCallTime());
-		FormattedStaffCall formatted = new FormattedStaffCall(group, seat, sanitizedSeat, callTime);
-		return formatted;
-	}
-
-	private String sanitize(String str) {
-		String escapedNull = StringUtils.isEmpty(str) ? StringUtils.EMPTY : str;
-		String sanitized = StringEscapeUtils.escapeHtml4(escapedNull);
-		return sanitized;
+		return calls;
 	}
 
 	public void deleteCall(String group, String seat) {
