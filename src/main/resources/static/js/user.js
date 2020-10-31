@@ -35,7 +35,10 @@ $(function() {
 
 	fn.check();
 
-	var url = $("#url").text() + group;
+	var urlObject = new URL("user", location.href);
+	urlObject.searchParams.set("group", group);
+	var url = urlObject.href;
+
 	$("#qr_code").qrcode({ text: url });
 	$("#user_qr").on("click", () => $("#modal").fadeIn());
 	$("#modal").on("click", () => $("#modal").fadeOut());

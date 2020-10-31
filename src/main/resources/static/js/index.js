@@ -6,15 +6,16 @@ $(function() {
 		var paths = ["staff", "user"];
 		var message = "グループIDを入力してください";
 		paths.forEach(function(path) {
-			var linkId = "#" + path + "_link";
-			var urlId = "#" + path + "_url";
-			var url = $(urlId).text() + encodeURIComponent(group);
+			var urlObject = new URL(path, location.href);
+			urlObject.searchParams.set("group", group);
+			var url = urlObject.href
+
 			var isValid = (group != "");
 
+			var linkId = "#" + path + "_link";
 			$(linkId).text(url);
-			$(linkId).attr("href", isValid ? url : "#");
 			$(linkId).off("click");
-			$(linkId).on("click", () => isValid ? "do nothing" : alert(message));
+			$(linkId).on("click", () => isValid ? window.open(url, "_blank") : alert(message));
 
 			var qrId = "#" + path + "_qr";
 			$(qrId).off("click");

@@ -16,11 +16,7 @@
 
 package com.herokuapp.maenarae;
 
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.UUID;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.SpringApplication;
@@ -48,43 +44,24 @@ public class Main {
 	}
 
 	@RequestMapping("/")
-	String index(HttpServletRequest request, Model model, String group) {
+	String index(String group, Model model) {
 		UUID uuid = UUID.randomUUID();
 		addAttribute(model, Param.GROUP, StringUtils.isEmpty(group) ? uuid : group);
-		setURL(request, model, Path.USER, Path.STAFF);
 		return getName(Path.INDEX);
 	}
 
 	@RequestMapping("/user")
-	String user(HttpServletRequest request, @RequestParam String group, String seat, Model model) {
+	String user(@RequestParam String group, String seat, Model model) {
 		addAttribute(model, Param.GROUP, group);
 		addAttribute(model, Param.SEAT, seat);
-		setURL(request, model, Path.USER);
 		return getName(Path.USER);
 
 	}
 
 	@RequestMapping("/staff")
-	String staff(HttpServletRequest request, @RequestParam String group, Model model) {
+	String staff(@RequestParam String group, Model model) {
 		addAttribute(model, Param.GROUP, group);
-		setURL(request, model, Path.STAFF);
 		return getName(Path.STAFF);
-	}
-
-	private void setURL(HttpServletRequest request, Model model, Path... paths) {
-		String scheme = request.getScheme();
-		String host = request.getServerName();
-		int port = request.getServerPort();
-		String query = getName(Param.GROUP) + "=";
-		for (Path path : paths) {
-			try {
-				URI uri = new URI(scheme, null, host, port, "/" + getName(path), query, null);
-				String paramName = getName(path);
-				model.addAttribute(paramName, uri);
-			} catch (URISyntaxException e) {
-				throw new RuntimeException(e);
-			}
-		}
 	}
 
 	private void addAttribute(Model model, Param param, Object value) {

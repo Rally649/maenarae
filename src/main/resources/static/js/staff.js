@@ -61,7 +61,10 @@ $(function() {
 	fn.updateCalls(false);
 
 	var group = $("#group").val();
-	var url = $("#url").text() + group;
+
+	var urlObject = new URL("staff", location.href);
+	urlObject.searchParams.set("group", group);
+	var url = urlObject.href;
 	$("#qr_code").qrcode({ text: url });
 	$("#staff_qr").on("click", () => $("#modal").fadeIn());
 	$("#modal").on("click", () => $("#modal").fadeOut());
