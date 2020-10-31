@@ -31,10 +31,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 @SpringBootApplication
 @EnableScheduling
 public class Main {
-	private enum Path {
-		INDEX, USER, STAFF
-	}
-
 	private enum Param {
 		GROUP, SEAT
 	}
@@ -47,21 +43,21 @@ public class Main {
 	String index(String group, Model model) {
 		UUID uuid = UUID.randomUUID();
 		addAttribute(model, Param.GROUP, StringUtils.isEmpty(group) ? uuid : group);
-		return getName(Path.INDEX);
+		return "index";
 	}
 
 	@RequestMapping("/user")
 	String user(@RequestParam String group, String seat, Model model) {
 		addAttribute(model, Param.GROUP, group);
 		addAttribute(model, Param.SEAT, seat);
-		return getName(Path.USER);
+		return "user";
 
 	}
 
 	@RequestMapping("/staff")
 	String staff(@RequestParam String group, Model model) {
 		addAttribute(model, Param.GROUP, group);
-		return getName(Path.STAFF);
+		return "staff";
 	}
 
 	private void addAttribute(Model model, Param param, Object value) {
