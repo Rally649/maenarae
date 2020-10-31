@@ -14,8 +14,10 @@ $(function() {
 
 			var linkId = "#" + path + "_link";
 			$(linkId).text(url);
+			$(linkId).attr("href", isValid ? url : "#");
+			$(linkId).attr("target", isValid ? "_blank" : "");
 			$(linkId).off("click");
-			$(linkId).on("click", () => isValid ? window.open(url, "_blank") : alert(message));
+			$(linkId).on("click", () => isValid ? "do nothing" : alert(message));
 
 			var qrId = "#" + path + "_qr";
 			$(qrId).off("click");
