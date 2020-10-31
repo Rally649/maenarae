@@ -31,9 +31,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 @SpringBootApplication
 @EnableScheduling
 public class Main {
-	private enum Param {
-		GROUP, SEAT
-	}
+	private final String GROUP = "group";
+
+	private final String SEAT = "seat";
 
 	public static void main(String[] args) throws Exception {
 		SpringApplication.run(Main.class, args);
@@ -42,31 +42,20 @@ public class Main {
 	@RequestMapping("/")
 	String index(String group, Model model) {
 		UUID uuid = UUID.randomUUID();
-		addAttribute(model, Param.GROUP, StringUtils.isEmpty(group) ? uuid : group);
+		model.addAttribute(GROUP, StringUtils.isEmpty(group) ? uuid : group);
 		return "index";
 	}
 
 	@RequestMapping("/user")
 	String user(@RequestParam String group, String seat, Model model) {
-		addAttribute(model, Param.GROUP, group);
-		addAttribute(model, Param.SEAT, seat);
+		model.addAttribute(GROUP, group);
+		model.addAttribute(SEAT, seat);
 		return "user";
 	}
 
 	@RequestMapping("/staff")
 	String staff(@RequestParam String group, Model model) {
-		addAttribute(model, Param.GROUP, group);
+		model.addAttribute(GROUP, group);
 		return "staff";
-	}
-
-	private void addAttribute(Model model, Param param, Object value) {
-		String paramName = getName(param);
-		model.addAttribute(paramName, value);
-	}
-
-	private String getName(Enum<?> e) {
-		String name = e.name();
-		String lowerCase = name.toLowerCase();
-		return lowerCase;
 	}
 }
