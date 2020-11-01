@@ -3,9 +3,9 @@ package com.herokuapp.maenarae.jpa;
 import java.util.Date;
 import java.util.List;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.CrudRepository;
 
-public interface StaffCallRepository extends JpaRepository<StaffCall, StaffCallPK> {
+public interface StaffCallRepository extends CrudRepository<StaffCall, StaffCallPK> {
 
 	List<StaffCall> findByGroupIdOrderByCallTime(String groupId);
 
