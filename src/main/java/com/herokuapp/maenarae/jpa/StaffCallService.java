@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class StaffCallService {
 	private final StaffCallRepository repository;
 
@@ -50,7 +51,6 @@ public class StaffCallService {
 	}
 
 	@Scheduled(cron = "0 0 * * * *", zone = "Asia/Tokyo")
-	@Transactional
 	public void takeInventory() {
 		Calendar current = Calendar.getInstance();
 		current.add(Calendar.DATE, -1);
