@@ -11,5 +11,5 @@ public interface StaffCallRepository extends CrudRepository<StaffCall, StaffCall
 
 	int countByGroupIdAndCallTimeLessThanEqual(String groupId, Date callTime);
 
-	long deleteByCallTimeBefore(Date callTime);
+	void deleteByCallTimeBefore(Date callTime);
 }
