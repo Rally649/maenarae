@@ -21,7 +21,7 @@ $(function() {
 
 				var date = new Date(callTime);
 				var YYYY = date.getFullYear();
-				var MM = slice(date.getMonth());
+				var MM = slice(date.getMonth() + 1);
 				var DD = slice(date.getDate());
 				var hh = slice(date.getHours());
 				var mm = slice(date.getMinutes());
