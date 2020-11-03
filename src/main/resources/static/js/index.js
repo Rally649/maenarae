@@ -4,7 +4,7 @@ $(function() {
 	fn.updateUrl = function() {
 		var group = $("#group").val();
 		var paths = ["staff", "user"];
-		var message = "グループIDを入力してください";
+		const showAlert = () => alert("グループIDを入力してください");
 		paths.forEach(function(path) {
 			var urlObject = new URL(path, location.href);
 			urlObject.searchParams.set("group", group);
@@ -12,23 +12,21 @@ $(function() {
 
 			var isValid = (group != "");
 
-			var linkId = "#" + path + "_link";
-			$(linkId).text(url);
-			$(linkId).attr("href", isValid ? url : "#");
-			$(linkId).attr("target", isValid ? "_blank" : "");
-			$(linkId).off("click");
-			$(linkId).on("click", () => isValid ? "do nothing" : alert(message));
+			var link = $("#" + path + "_link");
+			link.text(url);
+			link.attr("href", isValid ? url : "#");
+			link.attr("target", isValid ? "_blank" : "");
+			link.off("click").on("click", isValid ? null : showAlert);
 
-			var qrId = "#" + path + "_qr";
-			$(qrId).off("click");
-			$(qrId).on("click", () => isValid ? fn.showModal(linkId) : alert(message));
+			var qr = $("#" + path + "_qr");
+			const showModal = () => fn.showModal(link);
+			qr.off("click").on("click", isValid ? showModal : showAlert);
 		});
 	}
 
-	fn.showModal = function(id) {
-		var url = $(id).text();
-		$("#qr_code").html("");
-		$("#qr_code").qrcode({ text: url });
+	fn.showModal = function(link) {
+		var url = link.text();
+		$("#qr_code").html("").qrcode({ text: url });
 		$("#modal").fadeIn();
 	}
 
