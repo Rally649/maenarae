@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head
-	th:replace="fragments/template :: head(name='user', title='スタッフ呼出')">
+	th:replace="fragments/template :: head(name='user', title='順番待ち登録')">
 </head>
 
 <body>
@@ -10,7 +10,7 @@
 
 	<dl class="main-content">
 		<dt>
-			順番待ちの登録<img id="user_qr" src="qr_code.png" />
+			順番待ち登録<img id="user_qr" src="qr_code.png" />
 		</dt>
 		<dd>
 			<form action="/user" method="get">
