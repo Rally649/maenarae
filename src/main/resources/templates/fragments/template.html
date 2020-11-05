@@ -11,12 +11,12 @@
 <link rel="stylesheet" th:href="${'/css/' + name +'.css'}" />
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, minimum-scale=1.0">
-<title th:text="${'スタッフ呼出順管理 | ' + title}"></title>
+<title th:text="${'順番管理システム | ' + title}"></title>
 </head>
 
 <body>
 	<h1 th:fragment="title">
-		<a id="title_link"><img src="favicon.ico"></a><span>スタッフ呼出順管理</span>
+		<a id="title_link"><img src="favicon.ico"></a><span>順番管理システム</span>
 		<script>
 			$(function(){
 				$("#title_link").on("click", () => location.href = "/?group=" + $("#group").val());
