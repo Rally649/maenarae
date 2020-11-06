@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head
-	th:replace="fragments/template :: head(name='user', title='順番待ち登録')">
+	th:replace="fragments/template :: head(name='user', title='順番待ち受付')">
 </head>
 
 <body>
@@ -10,7 +10,7 @@
 
 	<dl class="main-content">
 		<dt>
-			順番待ち登録<img id="user_qr" src="qr_code.png" />
+			順番待ち受付<img id="user_qr" src="qr_code.png" />
 		</dt>
 		<dd>
 			<form action="/user" method="get">
@@ -35,7 +35,7 @@
 			<div class="form-group form-inline"
 				th:if="${! #strings.isEmpty(seat)}">
 				<label class="label"></label>
-				<button id="call_button" class="btn btn-primary">順番待ち</button>
+				<button id="call_button" class="btn btn-primary">受付</button>
 
 				<div id="message">
 					あなたの順番まで <span id="number_of_waiting"></span>人（30秒毎に自動更新）

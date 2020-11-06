@@ -7,142 +7,81 @@
 <body>
 	<h1 th:replace="fragments/template :: title"></h1>
 
-	<dl class="main-content">
-		<dt>トップページ</dt>
-		<dd>
-			<div class="form-group form-inline">
-				<label for="group">グループID</label> <input id="group"
-					class="form-control" th:value="${group}" />
-			</div>
+	<ul>
+		<li>簡易的な順番管理システムです。</li>
+		<li>無料でご利用頂けます。</li>
+		<li>メールアドレスの登録も不要です。</li>
+	</ul>
 
-			<div class="form-group form-inline">
-				<label class="url-label">順番待ち一覧</label> <img id="staff_qr"
-					src="qr_code.png" /> <a id="staff_link"
-					class="btn btn-outline-primary"></a>
+	<div class="main-content">
+		<div class="form-group form-inline">
+			<label for="group">グループID</label> <input id="group"
+				class="form-control" th:value="${group}" />
+		</div>
 
-			</div>
+		<div class="form-group form-inline">
+			<label class="url-label">順番待ち受付</label> <img id="user_qr"
+				src="qr_code.png" /> <a id="user_link"
+				class="btn btn-outline-primary"></a>
+		</div>
 
-			<div class="form-group form-inline">
-				<label class="url-label">順番待ち登録</label> <img id="user_qr"
-					src="qr_code.png" /> <a id="user_link"
-					class="btn btn-outline-primary"></a>
-			</div>
-		</dd>
-	</dl>
+		<div class="form-group form-inline">
+			<label class="url-label">順番待ち一覧</label> <img id="staff_qr"
+				src="qr_code.png" /> <a id="staff_link"
+				class="btn btn-outline-primary"></a>
+		</div>
+	</div>
 
 	<hr>
 
 	<details>
-		<summary>詳細な説明</summary>
-		<h2>概要</h2>
-		<ul>
-			<li>簡易的な順番管理システムです。</li>
-			<li>無料でご利用頂けます。</li>
-			<li>メールアドレスの登録も不要です。</li>
-		</ul>
+		<summary>詳しい説明</summary>
 
 		<h2>使い方</h2>
-		<ul class="list-group list-striped">
-			<li class="list-group-item">
+		<ol>
+			<li>
 				<dl>
-					<dt>代表の方</dt>
+					<dt>QRコードでURLを共有</dt>
 					<dd>
-						<ol>
-							<li>
-								<dl>
-									<dt>グループIDを変更(任意)</dt>
-									<dd>
-										<ul>
-											<li>UUIDで自動生成。任意で変更可能です。</li>
-											<li>グループIDは各ページに表示されます。</li>
-											<li>他と被らないIDを設定して下さい。</li>
-										</ul>
-									</dd>
-								</dl>
-							</li>
-							<li>
-								<dl>
-									<dt>生成されたURLを利用者で共有</dt>
-									<dd>
-										<ul>
-											<li>URLコピペやQRコードで共有して下さい。</li>
-											<li>ブックマーク登録で再利用できます。</li>
-										</ul>
-									</dd>
-								</dl>
-							</li>
-						</ol>
+						<ul>
+							<li>ブックマーク登録で再利用できます。</li>
+							<li>また、グループIDは任意で変更可能（全角も可）です。</li>
+							<li>他と被らないグループIDを設定して下さい。</li>
+						</ul>
 					</dd>
 				</dl>
 			</li>
-			<li class="list-group-item">
+			<li>
 				<dl>
-					<dt>スタッフの方</dt>
+					<dt>「順番待ち受付」で座席番号を入力して受付</dt>
 					<dd>
-						<ol>
-							<li>
-								<dl>
-									<dt>「順番待ち一覧」を開く</dt>
-									<dd>
-										<ul>
-											<li>30秒毎に更新、時刻順に表示されます。</li>
-											<li>パソコンのスリープに注意して下さい。</li>
-										</ul>
-									</dd>
-								</dl>
-							</li>
-							<li>
-								<dl>
-									<dt>対応済み座席番号の削除ボタン押下</dt>
-									<dd>
-										<ul>
-											<li>他スタッフ画面も同様に反映されます。</li>
-										</ul>
-									</dd>
-								</dl>
-							</li>
-						</ol>
+						<ul>
+							<li>ユーザを特定できれば、座席番号以外でも構いません。</li>
+							<li>任意のタイミングで受付ボタンを押して下さい。</li>
+						</ul>
 					</dd>
 				</dl>
 			</li>
-			<li class="list-group-item">
+			<li>
 				<dl>
-					<dt>ユーザの方</dt>
+					<dt>「順番待ち一覧」で確認</dt>
 					<dd>
-						<ol>
-							<li>
-								<dl>
-									<dt>「順番待ち登録」で座席番号を入力</dt>
-									<dd>
-										<ul>
-											<li>ユーザを特定できるものであれば、座席番号以外でも構いません。</li>
-										</ul>
-									</dd>
-								</dl>
-							</li>
-							<li>
-								<dl>
-									<dt>任意タイミングで「順番待ち」ボタン押下</dt>
-									<dd>
-										<ul>
-											<li>自分を含めた待ち人数が30秒毎に更新されます。</li>
-											<li>ページを閉じても順番待ちの登録は解除されません。</li>
-										</ul>
-									</dd>
-								</dl>
-							</li>
-						</ol>
+						<ul>
+							<li>入力した座席番号が受付順に表示されます。</li>
+							<li>対応後は削除ボタンを押して下さい。</li>
+						</ul>
 					</dd>
 				</dl>
 			</li>
-		</ul>
+		</ol>
+
 
 		<h2>注意事項</h2>
 		<ul class="list-group list-striped">
 			<li class="list-group-item">JavaScript利用のため、無効設定は解除してください。</li>
-			<li class="list-group-item">24時間経過した呼出は自動削除されます。</li>
+			<li class="list-group-item">受付から24時間経過したデータは自動削除されます。</li>
 			<li class="list-group-item">グループIDや座席番号はURLのクエリパラメータで保持するため、通信ログに残ります。個人情報の入力はお控えください。</li>
-			<li class="list-group-item">グループIDが全利用者で完全一致する必要があります。URLの共有は厳密に実施してください。</li>
+			<li class="list-group-item">グループIDが全利用者で完全一致する必要があります。URLは厳密に共有してください。</li>
 			<li class="list-group-item">グループIDを特定されると第三者が操作できます。セキュリティ重視の場合はご利用をお控えください。</li>
 			<li class="list-group-item">このシステムは、事前予告無しに仕様変更や稼働停止の可能性があります。また、このシステムによる、いかなる損害や不利益の責任は負いかねます。予めご了承ください。</li>
 		</ul>
@@ -183,6 +122,7 @@
 			<li>ご意見・ご要望は下記までご連絡ください。</li>
 			<li><div>rally.elspあぁっとおぉgmail.com</div></li>
 		</ul>
+
 	</details>
 
 	<div id="modal">

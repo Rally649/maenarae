@@ -40,7 +40,6 @@ h1 {
 	border-top: 3px solid #007bff;
 	border-bottom: 3px solid #007bff;
 	font-size: 1.5rem;
-	white-space: nowrap;
 }
 
 h1 img {
@@ -72,8 +71,4 @@ h2 {
 
 .list-striped>li:nth-child(odd) {
 	background: rgba(0, 0, 0, .08);
-}
-
-.no-wrap {
-	white-space: nowrap;
 }
