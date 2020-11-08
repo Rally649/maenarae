@@ -12,6 +12,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.filter.OncePerRequestFilter;
+import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import lombok.AllArgsConstructor;
@@ -19,24 +20,35 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class UnifyUrlFilter extends OncePerRequestFilter {
 
+	private boolean secure;
 	private String redirectHost;
+
+	private final String HTTP = "http";
+	private final String HTTPS = "https";
 
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
 
-		String requestHost = getHost(request);
-		if (!StringUtils.isEmpty(redirectHost) && !StringUtils.equals(requestHost, redirectHost)) {
+		UriComponents uri = getUriComponents(request);
+		String scheme = uri.getScheme();
+		String requestHost = uri.getHost();
+
+		boolean isRedirectHostEmpty = StringUtils.isEmpty(redirectHost);
+		boolean isValidSecureRedirect = secure && StringUtils.equals(scheme, HTTP);
+		boolean equalsHosts = StringUtils.equals(requestHost, redirectHost);
+
+		if (!isRedirectHostEmpty && (isValidSecureRedirect || !equalsHosts)) {
 			redirect(request, response);
 		} else {
 			filterChain.doFilter(request, response);
 		}
 	}
 
-	private String getHost(HttpServletRequest request) {
+	private UriComponents getUriComponents(HttpServletRequest request) {
 		UriComponentsBuilder builder = getRequestUriBuilder(request);
-		String host = builder.build().getHost();
-		return host;
+		UriComponents uri = builder.build();
+		return uri;
 	}
 
 	private void redirect(HttpServletRequest request, HttpServletResponse response) {
@@ -47,6 +59,7 @@ public class UnifyUrlFilter extends OncePerRequestFilter {
 
 	private String getRedirectUrl(HttpServletRequest request) {
 		UriComponentsBuilder builder = getRequestUriBuilder(request);
+		builder.scheme(secure ? HTTPS : HTTP);
 		builder.host(redirectHost);
 		setParams(request, builder);
 		String url = builder.build().toString();

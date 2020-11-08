@@ -7,5 +7,6 @@ import lombok.Data;
 @ConfigurationProperties(prefix = "redirect")
 @Data
 public class RedirectHostConfig {
+	private boolean secure;
 	private String host;
 }

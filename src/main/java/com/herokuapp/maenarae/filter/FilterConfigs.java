@@ -9,12 +9,15 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class FilterConfigs {
+	@Value("${redirect.secure}")
+	boolean secure;
+
 	@Value("${redirect.host}")
 	String redirectHost;
 
 	@Bean
 	public FilterRegistrationBean<Filter> redirectFilter() {
-		Filter filter = new UnifyUrlFilter(redirectHost);
+		Filter filter = new UnifyUrlFilter(secure, redirectHost);
 		FilterRegistrationBean<Filter> bean = new FilterRegistrationBean<>(filter);
 		return bean;
 	}
