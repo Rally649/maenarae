@@ -14,6 +14,6 @@ public class Cron {
 	@Scheduled(cron = "0 0 * * * *", zone = "Asia/Tokyo")
 	public void takeInventory() {
 		service.takeInventory();
+		System.gc();
 	}
-
 }
