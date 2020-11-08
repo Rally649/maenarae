@@ -17,7 +17,7 @@ public class FilterConfigs {
 
 	@Bean
 	public FilterRegistrationBean<Filter> redirectFilter() {
-		Filter filter = new RedirectHostFilter(fromHost, toHost);
+		Filter filter = new UnifyUrlFilter(fromHost, toHost);
 		FilterRegistrationBean<Filter> bean = new FilterRegistrationBean<>(filter);
 		return bean;
 	}

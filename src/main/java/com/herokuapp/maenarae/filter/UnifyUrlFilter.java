@@ -17,7 +17,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
-public class RedirectHostFilter extends OncePerRequestFilter {
+public class UnifyUrlFilter extends OncePerRequestFilter {
 
 	private String fromHost;
 	private String toHost;
