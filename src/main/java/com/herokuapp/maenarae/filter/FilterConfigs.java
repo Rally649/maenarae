@@ -9,10 +9,10 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class FilterConfigs {
-	@Value("redirect.host.from")
+	@Value("${redirect.host.from}")
 	String fromHost;
 
-	@Value("redirect.host.to")
+	@Value("${redirect.host.to}")
 	String toHost;
 
 	@Bean
