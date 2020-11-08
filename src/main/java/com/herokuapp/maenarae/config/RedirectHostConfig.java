@@ -4,9 +4,8 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import lombok.Data;
 
-@ConfigurationProperties(prefix = "redirect.host")
+@ConfigurationProperties(prefix = "redirect")
 @Data
 public class RedirectHostConfig {
-	private String from;
-	private String to;
+	private String host;
 }

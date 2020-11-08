@@ -9,15 +9,12 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class FilterConfigs {
-	@Value("${redirect.host.from}")
-	String fromHost;
-
-	@Value("${redirect.host.to}")
-	String toHost;
+	@Value("${redirect.host}")
+	String redirectHost;
 
 	@Bean
 	public FilterRegistrationBean<Filter> redirectFilter() {
-		Filter filter = new UnifyUrlFilter(fromHost, toHost);
+		Filter filter = new UnifyUrlFilter(redirectHost);
 		FilterRegistrationBean<Filter> bean = new FilterRegistrationBean<>(filter);
 		return bean;
 	}

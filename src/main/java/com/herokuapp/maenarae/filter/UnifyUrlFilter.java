@@ -19,15 +19,14 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class UnifyUrlFilter extends OncePerRequestFilter {
 
-	private String fromHost;
-	private String toHost;
+	private String redirectHost;
 
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
 
 		String requestHost = getHost(request);
-		if (!StringUtils.isAnyEmpty(fromHost, toHost) && StringUtils.equals(requestHost, fromHost)) {
+		if (!StringUtils.isEmpty(redirectHost) && !StringUtils.equals(requestHost, redirectHost)) {
 			redirect(request, response);
 		} else {
 			filterChain.doFilter(request, response);
@@ -48,7 +47,7 @@ public class UnifyUrlFilter extends OncePerRequestFilter {
 
 	private String getRedirectUrl(HttpServletRequest request) {
 		UriComponentsBuilder builder = getRequestUriBuilder(request);
-		builder.host(toHost);
+		builder.host(redirectHost);
 		setParams(request, builder);
 		String url = builder.build().toString();
 		return url;
