@@ -74,10 +74,9 @@ public class UnifyUrlFilter extends OncePerRequestFilter {
 
 	private UriComponentsBuilder setParams(HttpServletRequest request, UriComponentsBuilder builder) {
 		Map<String, String[]> parameterMap = request.getParameterMap();
-		for (String name : parameterMap.keySet()) {
-			Object[] values = parameterMap.get(name);
-			builder.queryParam(name, values);
-		}
+		parameterMap.forEach((name, values) -> {
+			builder.queryParam(name, (Object[]) values);
+		});
 		return builder;
 	}
 }
