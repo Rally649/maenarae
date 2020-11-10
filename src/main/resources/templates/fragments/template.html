@@ -1,7 +1,7 @@
 <!doctype html>
 <html xmlns:th="http://www.thymeleaf.org">
 
-<head th:fragment="head(name, title)">
+<head th:fragment="head(name, title, isIndexable)">
 <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
 <script src="js/jquery.qrcode.min.js"></script>
 <script th:src="${'/js/' + name + '.js'}"></script>
@@ -10,6 +10,7 @@
 <link rel="stylesheet" th:href="${'/css/common.css'}" />
 <link rel="stylesheet" th:href="${'/css/' + name +'.css'}" />
 <meta charset="utf-8">
+<meta name="robots" content="noindex" th:if="${!isIndexable}">
 <meta name="viewport" content="width=device-width, minimum-scale=1.0">
 <title th:text="${'順番管理システム | ' + title}"></title>
 <meta name="google-site-verification"
