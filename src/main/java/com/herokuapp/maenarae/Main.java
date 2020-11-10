@@ -54,14 +54,18 @@ public class Main {
 	String user(@RequestParam String group, String seat, Model model) {
 		model.addAttribute(GROUP, group);
 		model.addAttribute(SEAT, seat);
-		model.addAttribute(AJAX_REFRESH_CYCLE, ajaxRefreshCycle);
+		setAjaxRefreshCycle(model);
 		return "user";
 	}
 
 	@RequestMapping("/staff")
 	String staff(@RequestParam String group, Model model) {
 		model.addAttribute(GROUP, group);
-		model.addAttribute(AJAX_REFRESH_CYCLE, ajaxRefreshCycle);
+		setAjaxRefreshCycle(model);
 		return "staff";
+	}
+
+	private void setAjaxRefreshCycle(Model model) {
+		model.addAttribute(AJAX_REFRESH_CYCLE, Math.max(1, ajaxRefreshCycle));
 	}
 }

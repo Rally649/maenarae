@@ -48,7 +48,7 @@ $(function() {
 			});
 
 			clearTimeout(timeout);
-			var refreshCycle = Math.max(1, $("#ajax_refresh_cycle").text());
+			var refreshCycle = $("#ajax_refresh_cycle").text();
 			timeout = setTimeout(() => fn.updateCalls(true), refreshCycle * 1000);
 
 			if (isUsingChime && calls.length > 0 && $("#chime_check").is(":checked")) {
