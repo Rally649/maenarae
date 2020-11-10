@@ -19,3 +19,7 @@ dt {
 .label {
 	width: 5rem;
 }
+
+.form-inline span {
+	margin: 0;
+}

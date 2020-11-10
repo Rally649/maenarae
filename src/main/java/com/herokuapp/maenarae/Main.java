@@ -19,6 +19,7 @@ package com.herokuapp.maenarae;
 import java.util.UUID;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -32,8 +33,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 @EnableScheduling
 public class Main {
 	private final String GROUP = "group";
-
 	private final String SEAT = "seat";
+	private final String AJAX_REFRESH_CYCLE = "ajax_refresh_cycle";
+
+	@Value("${ajax.refresh.cycle}")
+	int ajaxRefreshCycle;
 
 	public static void main(String[] args) throws Exception {
 		SpringApplication.run(Main.class, args);
@@ -50,12 +54,14 @@ public class Main {
 	String user(@RequestParam String group, String seat, Model model) {
 		model.addAttribute(GROUP, group);
 		model.addAttribute(SEAT, seat);
+		model.addAttribute(AJAX_REFRESH_CYCLE, ajaxRefreshCycle);
 		return "user";
 	}
 
 	@RequestMapping("/staff")
 	String staff(@RequestParam String group, Model model) {
 		model.addAttribute(GROUP, group);
+		model.addAttribute(AJAX_REFRESH_CYCLE, ajaxRefreshCycle);
 		return "staff";
 	}
 }

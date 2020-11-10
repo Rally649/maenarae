@@ -20,7 +20,8 @@ $(function() {
 					$("#number_of_waiting").text(num);
 					$("#message").show();
 					$("#call_button").hide();
-					setTimeout(fn.check, 30000);
+					var refreshCycle = Math.max(1, $("#ajax_refresh_cycle").text());
+					setTimeout(fn.check, refreshCycle * 1000);
 				} else {
 					$("#message").hide();
 					$("#call_button").show();

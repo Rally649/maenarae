@@ -38,7 +38,9 @@
 				<button id="call_button" class="btn btn-primary">受付</button>
 
 				<div id="message">
-					あなたの順番まで <span id="number_of_waiting"></span>人（30秒毎に自動更新）
+					あなたの順番まで <span id="number_of_waiting"></span>人（<span
+						id="ajax_refresh_cycle" th:text="${ajax_refresh_cycle}"></span>秒毎に自動更新）
+
 				</div>
 			</div>
 		</dd>

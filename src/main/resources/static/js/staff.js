@@ -48,7 +48,8 @@ $(function() {
 			});
 
 			clearTimeout(timeout);
-			timeout = setTimeout(() => fn.updateCalls(true), 30000);
+			var refreshCycle = Math.max(1, $("#ajax_refresh_cycle").text());
+			timeout = setTimeout(() => fn.updateCalls(true), refreshCycle * 1000);
 
 			if (isUsingChime && calls.length > 0 && $("#chime_check").is(":checked")) {
 				audio.play();
