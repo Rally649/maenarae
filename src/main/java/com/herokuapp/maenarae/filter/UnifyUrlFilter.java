@@ -20,7 +20,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class UnifyUrlFilter extends OncePerRequestFilter {
 
-	private boolean secure;
+	private boolean isSecure;
 	private String redirectHost;
 
 	private final String HTTP = "http";
@@ -35,7 +35,7 @@ public class UnifyUrlFilter extends OncePerRequestFilter {
 		String requestHost = uri.getHost();
 
 		boolean isRedirectHostEmpty = StringUtils.isEmpty(redirectHost);
-		boolean isValidSecureRedirect = secure && StringUtils.equals(scheme, HTTP);
+		boolean isValidSecureRedirect = isSecure && StringUtils.equals(scheme, HTTP);
 		boolean equalsHosts = StringUtils.equals(requestHost, redirectHost);
 
 		if (!isRedirectHostEmpty && (isValidSecureRedirect || !equalsHosts)) {
@@ -59,7 +59,7 @@ public class UnifyUrlFilter extends OncePerRequestFilter {
 
 	private String getRedirectUrl(HttpServletRequest request) {
 		UriComponentsBuilder builder = getRequestUriBuilder(request);
-		builder.scheme(secure ? HTTPS : HTTP);
+		builder.scheme(isSecure ? HTTPS : HTTP);
 		builder.host(redirectHost);
 		setParams(request, builder);
 		String url = builder.build().toString();
