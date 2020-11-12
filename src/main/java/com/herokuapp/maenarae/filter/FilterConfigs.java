@@ -16,7 +16,7 @@ public class FilterConfigs {
 	String redirectHost;
 
 	@Bean
-	public FilterRegistrationBean<Filter> redirectFilter() {
+	public FilterRegistrationBean<Filter> unifyUrlFilter() {
 		Filter filter = new UnifyUrlFilter(isSecure, redirectHost);
 		FilterRegistrationBean<Filter> bean = new FilterRegistrationBean<>(filter);
 		return bean;
