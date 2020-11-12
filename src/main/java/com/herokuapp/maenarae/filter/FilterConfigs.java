@@ -21,4 +21,11 @@ public class FilterConfigs {
 		FilterRegistrationBean<Filter> bean = new FilterRegistrationBean<>(filter);
 		return bean;
 	}
+
+	@Bean
+	public FilterRegistrationBean<Filter> summarizeParameterFilter() {
+		Filter filter = new SummarizeParameterFilter();
+		FilterRegistrationBean<Filter> bean = new FilterRegistrationBean<>(filter);
+		return bean;
+	}
 }
