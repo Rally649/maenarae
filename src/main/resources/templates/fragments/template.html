@@ -4,6 +4,7 @@
 <head th:fragment="head(name, title, isIndexable)">
 <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
 <script src="js/jquery.qrcode.min.js"></script>
+<script src="js/common.js"></script>
 <script th:src="${'/js/' + name + '.js'}"></script>
 <link rel="stylesheet"
 	th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
@@ -22,11 +23,6 @@
 <body>
 	<h1 th:fragment="title">
 		<a id="title_link"><img src="favicon.ico"></a><span>順番管理システム</span>
-		<script>
-			$(function(){
-				$("#title_link").on("click", () => location.href = "/?group=" + $("#group").val());
-			});
-		</script>
 	</h1>
 </body>
 
