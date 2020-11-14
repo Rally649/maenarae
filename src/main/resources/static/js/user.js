@@ -9,7 +9,10 @@ $(function() {
 			url: url,
 			type: "POST",
 			data: { group: group, seat: seat }
-		}).done(data => success(data));
+		}).done(data => success(data)).fail(function() {
+			const ajax = () => fn.ajax(url, success);
+			setTimeout(ajax, 30000);
+		});
 	}
 
 	fn.check = function() {
