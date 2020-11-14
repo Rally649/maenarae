@@ -28,4 +28,11 @@ public class FilterConfigs {
 		FilterRegistrationBean<Filter> bean = new FilterRegistrationBean<>(filter);
 		return bean;
 	}
+
+	@Bean
+	public FilterRegistrationBean<Filter> blockSearchIndexingFilter() {
+		Filter filter = new BlockSearchIndexingFilter();
+		FilterRegistrationBean<Filter> bean = new FilterRegistrationBean<Filter>(filter);
+		return bean;
+	}
 }
