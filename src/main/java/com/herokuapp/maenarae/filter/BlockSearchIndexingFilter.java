@@ -16,7 +16,7 @@ public class BlockSearchIndexingFilter extends OncePerRequestFilter {
 			throws ServletException, IOException {
 		String path = request.getRequestURI();
 		boolean isRoot = StringUtils.equals(path, "/");
-		response.setHeader("X-Robots-Tag", isRoot ? "all" : "noindex");
+		response.setHeader("X-Robots-Tag", isRoot ? "nofollow" : "noindex");
 		filterChain.doFilter(request, response);
 	}
 }
