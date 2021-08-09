@@ -11,7 +11,7 @@ public class Cron {
 	@Autowired
 	StaffCallService service;
 
-	@Scheduled(cron = "0 0 0 * * *", zone = "Asia/Tokyo")
+	@Scheduled(fixedRate = 3600000)
 	public void takeInventory() {
 		service.takeInventory();
 	}
