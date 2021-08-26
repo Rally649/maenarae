@@ -15,7 +15,6 @@ $(function() {
 			var link = $("#" + path + "_link");
 			link.text(url);
 			link.attr("href", isValid ? url : "#");
-			link.attr("target", isValid ? "_blank" : "");
 			link.off("click").on("click", isValid ? null : showAlert);
 
 			var qr = $("#" + path + "_qr");
