@@ -25,7 +25,8 @@ $(function() {
 
 	fn.showModal = function(link) {
 		var url = link.text();
-		$("#qr_code").html("").qrcode({ text: url });
+		$("#qr_code").html("");
+		new QRCode(document.getElementById("qr_code"), url);
 		$("#modal").fadeIn();
 	}
 
