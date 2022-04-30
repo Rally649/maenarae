@@ -43,7 +43,7 @@ $(function() {
 	urlObject.searchParams.set("group", group);
 	var url = urlObject.href;
 
-	$("#qr_code").qrcode({ text: url });
+	new QRCode(document.getElementById("qr_code"), url);
 	$("#user_qr").on("click", () => $("#modal").fadeIn());
 	$("#modal").on("click", () => $("#modal").fadeOut());
 });

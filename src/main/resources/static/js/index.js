@@ -25,9 +25,17 @@ $(function() {
 
 	fn.showModal = function(link) {
 		var url = link.text();
+		var modal = $("#modal");
+		var width = modal.width();
+		var height = modal.height();
+		var size = Math.floor(Math.min(width, height) * 0.8);
 		$("#qr_code").html("");
-		new QRCode(document.getElementById("qr_code"), url);
-		$("#modal").fadeIn();
+		new QRCode(document.getElementById("qr_code"), {
+			text: url,
+			width: size,
+			height: size
+		});
+		modal.fadeIn();
 	}
 
 	fn.updateUrl();

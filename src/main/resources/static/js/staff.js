@@ -67,7 +67,7 @@ $(function() {
 	var urlObject = new URL("staff", location.href);
 	urlObject.searchParams.set("group", group);
 	var url = urlObject.href;
-	$("#qr_code").qrcode({ text: url });
+	new QRCode(document.getElementById("qr_code"), url);
 	$("#staff_qr").on("click", () => $("#modal").fadeIn());
 	$("#modal").on("click", () => $("#modal").fadeOut());
 });
