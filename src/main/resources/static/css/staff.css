@@ -1,14 +1,6 @@
 @charset "UTF-8";
 
-#group {
-	width: 21rem;
-}
-
-.main-content {
-	width: fit-content;
-}
-
-.table td, .table th {
+table td, table th {
 	padding: 0.3rem;
 	text-align: center;
 	vertical-align: middle;
@@ -17,15 +9,15 @@
 	overflow: auto;
 }
 
+tr:nth-child(odd) {
+	background: rgba(0, 0, 0, .08);
+}
+
 ul {
 	list-style: none;
 	padding: unset;
 }
 
-li {
-	margin-bottom: 1rem;
-}
-
-#url {
-	display: none;
+.wrap {
+	white-space: normal;
 }

@@ -1,25 +1,5 @@
 @charset "UTF-8";
 
-dl {
-	width: fit-content;
-}
-
-dt {
-	font-size: 1.2rem;
-}
-
-#group, #seat, #ok_button, #call_button, #message {
-	width: 21rem;
-}
-
-#call_button, #message, #url {
+#message {
 	display: none;
-}
-
-.label {
-	width: 5rem;
-}
-
-.form-inline span {
-	margin: 0;
 }

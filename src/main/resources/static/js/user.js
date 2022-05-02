@@ -1,49 +1,53 @@
 $(function() {
-	var group = $("#group").val();
-	var seat = $("#seat").val();
-
 	var fn = {};
 
-	fn.ajax = function(url, success) {
-		$.ajax({
-			url: url,
-			type: "POST",
-			data: { group: group, seat: seat }
-		}).done(data => success(data)).fail(function() {
-			const ajax = () => fn.ajax(url, success);
-			setTimeout(ajax, 30000);
-		});
-	}
+	var url = new URL(location.href);
+	var params = url.searchParams;
+	var group = params.get("group");
+	var seat = params.get("seat");
 
-	fn.check = function() {
-		const isEmpty = (str => str == null || str == '');
+	const isEmpty = (str => str == null || str == '');
+
+	fn.ajax = function(url, group, seat, success) {
 		if (!isEmpty(group) && !isEmpty(seat)) {
-			fn.ajax("/getNumberOfWaiting", function(num) {
-				if (num > 0) {
-					$("#number_of_waiting").text(num);
-					$("#message").show();
-					$("#call_button").hide();
-					var refreshCycle = $("#ajax_refresh_cycle").text();
-					setTimeout(fn.check, refreshCycle * 1000);
-				} else {
-					$("#message").hide();
-					$("#call_button").show();
-				}
+			$.ajax({
+				url: url,
+				type: "POST",
+				data: { group: group, seat: seat }
+			}).done(data => success(data)).fail(function() {
+				const ajax = () => fn.ajax(url, success);
+				setTimeout(ajax, 30000);
 			});
 		}
 	}
 
-	$("#call_button").on("click", function() {
-		fn.ajax("/callStaff", fn.check);
+	fn.check = function() {
+		fn.ajax("/getNumberOfWaiting", group, seat, function(num) {
+			if (num > 0) {
+				$("#number_of_waiting").text(num);
+				$("#message").show();
+				$("#ok_button").hide();
+				var refreshCycle = $("#ajax_refresh_cycle").text();
+				setTimeout(fn.check, refreshCycle * 1000);
+			} else {
+				$("#message").hide();
+				$("#ok_button").show();
+			}
+		});
+	}
+
+	$("#ok_button").on("click", function() {
+		if (isEmpty(seat)) {
+			var seat = $("#seat").val();
+			if (!isEmpty(seat)) {
+				fn.ajax("/callStaff", group, seat, fn.check);
+				location.href = "/user?group=" + group + "&seat=" + seat;
+			}
+		} else {
+			fn.ajax("/callStaff", group, seat, fn.check);
+		}
 	});
 
+	$(isEmpty(seat) ? "#seat" : "#ok_button").focus();
 	fn.check();
-
-	var urlObject = new URL("user", location.href);
-	urlObject.searchParams.set("group", group);
-	var url = urlObject.href;
-
-	new QRCode(document.getElementById("qr_code"), url);
-	$("#user_qr").on("click", () => $("#modal").fadeIn());
-	$("#modal").on("click", () => $("#modal").fadeOut());
 });

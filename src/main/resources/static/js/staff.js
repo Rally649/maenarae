@@ -40,13 +40,13 @@ $(function() {
 
 				var tr = $("<tr>").appendTo($("#calls"));
 				$("<td>").text(seat).appendTo(tr);
-				$("<td>").text(time).appendTo(tr);
+				$("<td>").text(time).addClass("wrap").appendTo(tr);
 
 				var message = "「" + seat + "」を削除しますか？";
 				const updateCalls = () => fn.updateCalls(false);
 				const deleteCall = () => fn.ajax("deleteCall", group, seat, updateCalls);
 				const buttonAction = () => confirm(message) && deleteCall();
-				var button = $("<button>").text("削除").addClass("btn btn-danger").on("click", buttonAction);
+				var button = $("<button>").text("削除").on("click", buttonAction);
 				button.appendTo($("<td>").appendTo(tr));
 			});
 
@@ -61,13 +61,4 @@ $(function() {
 	}
 
 	fn.updateCalls(false);
-
-	var group = $("#group").val();
-
-	var urlObject = new URL("staff", location.href);
-	urlObject.searchParams.set("group", group);
-	var url = urlObject.href;
-	new QRCode(document.getElementById("qr_code"), url);
-	$("#staff_qr").on("click", () => $("#modal").fadeIn());
-	$("#modal").on("click", () => $("#modal").fadeOut());
 });

@@ -9,106 +9,37 @@
 
 	<ul>
 		<li>簡易的な順番管理システムです。</li>
-		<li>無料でご利用頂けます。</li>
-		<li>メールアドレスの登録も不要です。</li>
+		<li>勉強用に作成しました。</li>
 	</ul>
 
-	<div class="main-content">
-		<div class="form-group form-inline">
-			<label for="group">グループID</label> <input id="group"
-				class="form-control" th:value="${group}" />
-		</div>
-
-		<div class="form-group form-inline">
-			<label class="url-label">順番待ち受付</label> <img id="user_qr"
-				src="qr_code.png" /> <a id="user_link"
-				class="btn btn-outline-primary"></a>
-		</div>
-
-		<div class="form-group form-inline">
-			<label class="url-label">順番待ち一覧</label> <img id="staff_qr"
-				src="qr_code.png" /> <a id="staff_link"
-				class="btn btn-outline-primary"></a>
-		</div>
-	</div>
+	<input id="group" th:value="${group}" type="hidden" readonly />
 
 	<h2>使い方</h2>
 	<ol>
-		<li>
-			<dl>
-				<dt>QRコードでURLを共有</dt>
-				<dd>
-					<ul>
-						<li>ブックマーク登録で再利用できます。</li>
-						<li>また、グループIDは任意で変更可能（全角も可）です。</li>
-						<li>他と被らないグループIDを設定して下さい。</li>
-					</ul>
-				</dd>
-			</dl>
+		<li>URLを共有
+			<button id="qrcode_button">QRコード</button>
+			<button id="url_button">URLをコピー</button>
 		</li>
-		<li>
-			<dl>
-				<dt>「順番待ち受付」で座席番号を入力して受付</dt>
-				<dd>
-					<ul>
-						<li>ユーザを特定できれば、座席番号以外でも構いません。</li>
-						<li>任意のタイミングで受付ボタンを押して下さい。</li>
-					</ul>
-				</dd>
-			</dl>
-		</li>
-		<li>
-			<dl>
-				<dt>「順番待ち一覧」で確認</dt>
-				<dd>
-					<ul>
-						<li>入力した座席番号が受付順に表示されます。</li>
-						<li>対応後は削除ボタンを押して下さい。</li>
-					</ul>
-				</dd>
-			</dl>
-		</li>
+		<li><a id="user_link">順番待ち受付</a>で座席番号を入力して受付</li>
+		<li><a id="staff_link">順番待ち一覧</a>で確認</li>
 	</ol>
 
-
 	<h2>注意事項</h2>
-	<ul class="list-group list-striped">
-		<li class="list-group-item">JavaScript利用のため、無効設定は解除してください。</li>
-		<li class="list-group-item">受付から24時間経過したデータは自動削除されます。</li>
-		<li class="list-group-item">グループIDや座席番号はURLのクエリパラメータで保持するため、通信ログに残ります。個人情報の入力はお控えください。</li>
-		<li class="list-group-item">グループIDが全利用者で完全一致する必要があります。URLは厳密に共有してください。</li>
-		<li class="list-group-item">グループIDを特定されると第三者が操作できます。セキュリティ重視の場合はご利用をお控えください。</li>
-		<li class="list-group-item">このシステムは、事前予告無しに仕様変更や稼働停止の可能性があります。また、このシステムによる、いかなる損害や不利益の責任は負いかねます。予めご了承ください。</li>
+	<ul class="striped wrap">
+		<li>JavaScript利用のため、無効設定は解除してください。</li>
+		<li>受付から24時間経過したデータは自動削除されます。</li>
+		<li>グループIDや座席番号はURLで保持するため、通信ログに残ります。個人情報の入力はお控えください。</li>
+		<li>グループIDが全利用者で完全一致する必要があります。URLは厳密に共有してください。</li>
+		<li>グループIDを特定されると第三者が操作できます。セキュリティ重視の場合はご利用をお控えください。</li>
+		<li>このシステムは、事前予告無しに仕様変更や稼働停止の可能性があります。また、このシステムによる、いかなる損害や不利益の責任は負いかねます。予めご了承ください。</li>
 	</ul>
 
 	<h2>クレジット表記</h2>
-	<ul class="list-group">
-		<li class="list-group-item">
-			<dl>
-				<dt>QRコードの生成</dt>
-				<dd>
-					<ul>
-						<li>davidshimjs/qrcodejs</li>
-						<li><a href="https://github.com/davidshimjs/qrcodejs"
-							class="btn btn-outline-primary" target="_blank">https://github.com/jeromeetienne/jquery-qrcode</a></li>
-					</ul>
-				</dd>
-			</dl>
-		</li>
-
-		<li class="list-group-item">
-			<dl>
-				<dt>呼出一覧画面のチャイム</dt>
-				<dd>
-					<ul>
-						<li>On-Jin～音人～</li>
-						<li><a href="https://on-jin.com/sound/index.php"
-							class="btn btn-outline-primary" target="_blank">https://on-jin.com/sound/index.php</a></li>
-						<li>チャイム・インターホン02</li>
-					</ul>
-				</dd>
-			</dl>
-		</li>
+	<ul class="striped">
+		<li><div>QRコードの生成</div> <a
+			href="https://github.com/davidshimjs/qrcodejs" target="_blank">davidshimjs/qrcodejs</a></li>
+		<li><div>呼出一覧画面のチャイム</div> <a
+			href="https://on-jin.com/sound/index.php" target="_blank">On-Jin～音人～「チャイム・インターホン02」</a></li>
 	</ul>
 
 	<h2>連絡先</h2>
@@ -120,7 +51,7 @@
 	<hr>
 
 	<div id="modal">
-		<div id="qr_code"></div>
+		<div id="qrcode"></div>
 	</div>
 
 </body>
