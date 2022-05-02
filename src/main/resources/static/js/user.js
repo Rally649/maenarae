@@ -1,10 +1,10 @@
 $(function() {
-	var fn = {};
+	let fn = {};
 
-	var url = new URL(location.href);
-	var params = url.searchParams;
-	var group = params.get("group");
-	var seat = params.get("seat");
+	let url = new URL(location.href);
+	let params = url.searchParams;
+	let group = params.get("group");
+	let seat = params.get("seat");
 
 	const isEmpty = (str => str == null || str == '');
 
@@ -27,7 +27,7 @@ $(function() {
 				$("#number_of_waiting").text(num);
 				$("#message").show();
 				$("#ok_button").hide();
-				var refreshCycle = $("#ajax_refresh_cycle").text();
+				let refreshCycle = $("#ajax_refresh_cycle").text();
 				setTimeout(fn.check, refreshCycle * 1000);
 			} else {
 				$("#message").hide();
@@ -38,7 +38,7 @@ $(function() {
 
 	$("#ok_button").on("click", function() {
 		if (isEmpty(seat)) {
-			var seat = $("#seat").val();
+			let seat = $("#seat").val();
 			if (!isEmpty(seat)) {
 				fn.ajax("/callStaff", group, seat, fn.check);
 				location.href = "/user?group=" + group + "&seat=" + seat;

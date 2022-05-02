@@ -1,26 +1,26 @@
 $(function() {
-	var group = $("#group").val();
-	var paths = ["staff", "user"];
+	let group = $("#group").val();
+	let paths = ["staff", "user"];
 	paths.forEach(function(path) {
-		var urlObject = new URL(path, location.href);
+		let urlObject = new URL(path, location.href);
 		urlObject.searchParams.set("group", group);
-		var url = urlObject.href
+		let url = urlObject.href
 
-		var link = $("#" + path + "_link");
+		let link = $("#" + path + "_link");
 		link.attr("href", url);
 	});
 
-	var qr = $("#qrcode_button");
+	let qr = $("#qrcode_button");
 	const showModal = () => $("#modal").fadeIn();
 	qr.on("click", showModal);
 
-	var urlObject = new URL(location.href);
+	let urlObject = new URL(location.href);
 	urlObject.searchParams.set("group", group);
-	var url = urlObject.href
-	var modal = $("#modal");
-	var width = modal.width();
-	var height = modal.height();
-	var size = Math.floor(Math.min(width, height) * 0.8);
+	let url = urlObject.href
+	let modal = $("#modal");
+	let width = modal.width();
+	let height = modal.height();
+	let size = Math.floor(Math.min(width, height) * 0.8);
 	$("#qrcode").html("");
 	new QRCode(document.getElementById("qrcode"), {
 		text: url,
