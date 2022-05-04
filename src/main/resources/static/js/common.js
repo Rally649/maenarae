@@ -1,6 +1,6 @@
-$(function() {
+window.addEventListener("load", function() {
 	let urlObject = new URL("/", location.href);
-	let group = $("#group").val();
+	let group = document.getElementById("group").value;
 	group && urlObject.searchParams.set("group", group);
-	$("#title_link").attr("href", urlObject.href);
+	document.getElementById("title_link").setAttribute("href", urlObject.href);
 });

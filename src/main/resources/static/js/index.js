@@ -1,35 +1,53 @@
-$(function() {
-	let group = $("#group").val();
-	let paths = ["staff", "user"];
-	paths.forEach(function(path) {
-		let urlObject = new URL(path, location.href);
-		urlObject.searchParams.set("group", group);
+window.addEventListener("load", function() {
+	function setLinks(group) {
+		let paths = ["staff", "user"];
+		paths.forEach(function(path) {
+			let urlObject = new URL(path, location.href);
+			urlObject.searchParams.set("group", group.value);
+			let url = urlObject.href
+			let link = document.getElementById(path + "_link");
+			link.setAttribute("href", url);
+		});
+	}
+
+	function setQrcode(qrcodeArea, url) {
+		let width = window.innerWidth;
+		let height = window.innerHeight;
+		let size = Math.floor(Math.min(width, height) * 0.8);
+		new QRCode(qrcodeArea, {
+			text: url,
+			width: size,
+			height: size
+		});
+	}
+
+	function setModalAction(qrcodeButton, modal) {
+		qrcodeButton.onclick = () => modal.style.display = "block";
+		modal.onclick = () => modal.style.display = "none";
+	}
+
+	function setUrlCopyButton(url, urlButton) {
+		const copyUrl = () => navigator.clipboard.writeText(url).then(alert("コピーしました"));
+		urlButton.onclick = copyUrl;
+	}
+
+	function getUrl(group) {
+		let urlObject = new URL(location.href);
+		urlObject.searchParams.set("group", group.value);
 		let url = urlObject.href
+		return url;
+	}
 
-		let link = $("#" + path + "_link");
-		link.attr("href", url);
-	});
+	let group = document.getElementById("group");
+	let qrcodeButton = document.getElementById("qrcode_button");
+	let urlButton = document.getElementById("url_button");
+	let modal = document.getElementById("modal");
+	let qrcodeArea = document.getElementById("qrcode");
 
-	let qr = $("#qrcode_button");
-	const showModal = () => $("#modal").fadeIn();
-	qr.on("click", showModal);
+	let url = getUrl(group);
 
-	let urlObject = new URL(location.href);
-	urlObject.searchParams.set("group", group);
-	let url = urlObject.href
-	let modal = $("#modal");
-	let width = modal.width();
-	let height = modal.height();
-	let size = Math.floor(Math.min(width, height) * 0.8);
-	$("#qrcode").html("");
-	new QRCode(document.getElementById("qrcode"), {
-		text: url,
-		width: size,
-		height: size
-	});
-
-	$("#modal").on("click", () => $("#modal").fadeOut());
-
-	const copyUrl = () => navigator.clipboard.writeText(url).then(alert("コピーしました"));
-	$("#url_button").on("click", copyUrl);
-})
+	setLinks(group);
+	setQrcode(qrcodeArea, url);
+	setModalAction(qrcodeButton, modal);
+	setUrlCopyButton(url, urlButton);
+});

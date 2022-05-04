@@ -1,4 +1,4 @@
-$(function() {
+window.addEventListener("load", function() {
 	let fn = {};
 
 	let url = new URL(location.href);
@@ -6,39 +6,46 @@ $(function() {
 	let group = params.get("group");
 	let seat = params.get("seat");
 
+	let numberOfWaiting = document.getElementById("number_of_waiting");
+	let message = document.getElementById("message");
+	let okButton = document.getElementById("ok_button");
+	let ajaxRefreshCycle = document.getElementById("ajax_refresh_cycle");
+
 	const isEmpty = (str => str == null || str == '');
 
 	fn.ajax = function(url, group, seat, success) {
 		if (!isEmpty(group) && !isEmpty(seat)) {
-			$.ajax({
-				url: url,
-				type: "POST",
-				data: { group: group, seat: seat }
-			}).done(data => success(data)).fail(function() {
-				const ajax = () => fn.ajax(url, success);
-				setTimeout(ajax, 30000);
-			});
+			let form = new FormData();
+			form.append("group", group);
+			form.append("seat", seat);
+			fetch(url, { method: "POST", body: form })
+				.then(response => response.text())
+				.then(data => success(data))
+				.catch(function() {
+					const ajax = () => fn.ajax(url, group, seat, success);
+					setTimeout(ajax, 30000);
+				});
 		}
 	}
 
 	fn.check = function() {
 		fn.ajax("/getNumberOfWaiting", group, seat, function(num) {
 			if (num > 0) {
-				$("#number_of_waiting").text(num);
-				$("#message").show();
-				$("#ok_button").hide();
-				let refreshCycle = $("#ajax_refresh_cycle").text();
+				numberOfWaiting.innerText = num;
+				message.style.display = "block";
+				okButton.style.display = "none";
+				let refreshCycle = ajaxRefreshCycle.innerText;
 				setTimeout(fn.check, refreshCycle * 1000);
 			} else {
-				$("#message").hide();
-				$("#ok_button").show();
+				message.style.display = "none";
+				okButton.style.display = "block";
 			}
 		});
 	}
 
-	$("#ok_button").on("click", function() {
+	okButton.onclick = function() {
 		if (isEmpty(seat)) {
-			let seat = $("#seat").val();
+			let seat = document.getElementById("seat").value;
 			if (!isEmpty(seat)) {
 				fn.ajax("/callStaff", group, seat, fn.check);
 				location.href = "/user?group=" + group + "&seat=" + seat;
@@ -46,8 +53,8 @@ $(function() {
 		} else {
 			fn.ajax("/callStaff", group, seat, fn.check);
 		}
-	});
+	};
 
-	$(isEmpty(seat) ? "#seat" : "#ok_button").focus();
+	document.getElementById(isEmpty(seat) ? "seat" : "ok_button").focus();
 	fn.check();
 });
