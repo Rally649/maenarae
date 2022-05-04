@@ -12,6 +12,11 @@ ol {
 	white-space: normal;
 }
 
+#copied {
+	display: none;
+	font-size: 0.5rem;
+}
+
 #modal {
 	position: absolute;
 	left: 0;

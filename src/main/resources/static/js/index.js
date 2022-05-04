@@ -27,7 +27,11 @@ window.addEventListener("load", function() {
 	}
 
 	function setUrlCopyButton(url, urlButton) {
-		const copyUrl = () => navigator.clipboard.writeText(url).then(alert("コピーしました"));
+		const copyUrl = () => navigator.clipboard.writeText(url).then(function() {
+			let style = document.getElementById("copied").style;
+			style.display = "inline-block";
+			setTimeout(() => style.display = "none", 1000);
+		});
 		urlButton.onclick = copyUrl;
 	}
 
