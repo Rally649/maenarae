@@ -35,34 +35,35 @@ window.addEventListener("load", function() {
 				return YYYY + "-" + MM + "-" + DD + " " + hh + ":" + mm + ":" + ss;
 			}
 
-			Array.from(document.querySelectorAll("#calls tr")).filter(e => e.id != "caption").forEach(e => e.remove());
+			let tbody = document.querySelector("#calls tbody");
+			Array.from(tbody.children).forEach(e => e.remove());
 			calls.forEach(function(call) {
+				function create(name, attributes) {
+					let element = document.createElement(name);
+					Object.keys(attributes).forEach(key => element[key] = attributes[key]);
+					return element;
+				}
+
+				function append(parent, child) {
+					parent.appendChild(child);
+					return parent;
+				}
+
 				let group = call.groupId;
 				let seat = call.seatId;
 				let time = format(call.callTime);
 
-				let tr = document.createElement("tr");
-				document.getElementById("calls").appendChild(tr);
-
-				let seatTd = document.createElement("td");
-				seatTd.innerText = seat
-				tr.appendChild(seatTd);
-
-				let timeTd = document.createElement("td");
-				timeTd.innerText = time;
-				tr.appendChild(timeTd);
+				let tr = create("tr", {});
+				append(tbody, tr)
+				append(tr, create("td", { innerText: seat }));
+				append(tr, create("td", { innerText: time }));
 
 				let message = "「" + seat + "」を削除しますか？";
 				const updateCalls = () => fn.updateCalls(false);
 				const deleteCall = () => fn.ajax("/deleteCall", group, seat, updateCalls);
 				const buttonAction = () => confirm(message) && deleteCall();
-				let button = document.createElement("button");
-				button.innerText = "削除";
-				button.onclick = buttonAction;
-
-				let buttonTd = document.createElement("td");
-				buttonTd.appendChild(button);
-				tr.appendChild(buttonTd);
+				let button = create("button", { innerText: "削除", onclick: buttonAction });
+				append(tr, append(create("td", {}), button));
 			});
 
 			clearTimeout(timeout);

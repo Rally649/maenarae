@@ -9,7 +9,7 @@ table td, table th {
 	overflow: auto;
 }
 
-tr:nth-child(odd) {
+thead>tr, tbody>tr:nth-child(even) {
 	background: rgba(0, 0, 0, .08);
 }
 
