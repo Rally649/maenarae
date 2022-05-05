@@ -53,8 +53,7 @@ window.addEventListener("load", function() {
 				tr.appendChild(create("td", { innerText: time }));
 
 				let message = "「" + seat + "」を削除しますか？";
-				const updateCalls = () => updateCalls(false);
-				const deleteCall = () => ajax("/deleteCall", group, seat, updateCalls);
+				const deleteCall = () => ajax("/deleteCall", group, seat, () => updateCalls(false));
 				const buttonAction = () => confirm(message) && deleteCall();
 				let button = create("button", { innerText: "削除", onclick: buttonAction });
 				tr.appendChild(create("td", {})).appendChild(button);
