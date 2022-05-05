@@ -44,26 +44,21 @@ window.addEventListener("load", function() {
 					return element;
 				}
 
-				function append(parent, child) {
-					parent.appendChild(child);
-					return parent;
-				}
-
 				let group = call.groupId;
 				let seat = call.seatId;
 				let time = format(call.callTime);
 
 				let tr = create("tr", {});
-				append(tbody, tr)
-				append(tr, create("td", { innerText: seat }));
-				append(tr, create("td", { innerText: time }));
+				tbody.appendChild(tr);
+				tr.appendChild(create("td", { innerText: seat }));
+				tr.appendChild(create("td", { innerText: time }));
 
 				let message = "「" + seat + "」を削除しますか？";
 				const updateCalls = () => fn.updateCalls(false);
 				const deleteCall = () => fn.ajax("/deleteCall", group, seat, updateCalls);
 				const buttonAction = () => confirm(message) && deleteCall();
 				let button = create("button", { innerText: "削除", onclick: buttonAction });
-				append(tr, append(create("td", {}), button));
+				tr.appendChild(create("td", {})).appendChild(button);
 			});
 
 			clearTimeout(timeout);
