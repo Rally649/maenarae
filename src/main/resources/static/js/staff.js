@@ -1,6 +1,5 @@
 window.addEventListener("load", function() {
-	let fn = {};
-	fn.ajax = function(url, group, seat, success) {
+	function ajax(url, group, seat, success) {
 		let form = new FormData();
 		form.append("group", group);
 		form.append("seat", seat);
@@ -8,18 +7,18 @@ window.addEventListener("load", function() {
 			.then(response => response.text())
 			.then(data => success(data))
 			.catch(function() {
-				const ajax = () => fn.ajax(url, group, seat, success);
-				setTimeout(ajax, 30000);
+				const retry = () => ajax(url, group, seat, success);
+				setTimeout(retry, 30000);
 			});
 	}
 
 	let timeout;
 	let audio = new Audio("chime.mp3");
 
-	fn.updateCalls = function(isUsingChime) {
+	function updateCalls(isUsingChime) {
 		let group = document.getElementById("group").value;
 		let seat = "";
-		fn.ajax("/getCalls", group, seat, function(callsText) {
+		ajax("/getCalls", group, seat, function(callsText) {
 			let calls = JSON.parse(callsText);
 
 			const format = function(callTime) {
@@ -54,8 +53,8 @@ window.addEventListener("load", function() {
 				tr.appendChild(create("td", { innerText: time }));
 
 				let message = "「" + seat + "」を削除しますか？";
-				const updateCalls = () => fn.updateCalls(false);
-				const deleteCall = () => fn.ajax("/deleteCall", group, seat, updateCalls);
+				const updateCalls = () => updateCalls(false);
+				const deleteCall = () => ajax("/deleteCall", group, seat, updateCalls);
 				const buttonAction = () => confirm(message) && deleteCall();
 				let button = create("button", { innerText: "削除", onclick: buttonAction });
 				tr.appendChild(create("td", {})).appendChild(button);
@@ -63,7 +62,7 @@ window.addEventListener("load", function() {
 
 			clearTimeout(timeout);
 			let refreshCycle = document.getElementById("ajax_refresh_cycle").innerText;
-			timeout = setTimeout(() => fn.updateCalls(true), refreshCycle * 1000);
+			timeout = setTimeout(() => updateCalls(true), refreshCycle * 1000);
 
 			if (isUsingChime && calls.length > 0 && document.getElementById("chime_check").matches(":checked")) {
 				audio.play();
@@ -71,5 +70,5 @@ window.addEventListener("load", function() {
 		});
 	}
 
-	fn.updateCalls(false);
+	updateCalls(false);
 });

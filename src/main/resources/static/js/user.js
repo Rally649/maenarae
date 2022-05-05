@@ -1,6 +1,4 @@
 window.addEventListener("load", function() {
-	let fn = {};
-
 	let url = new URL(location.href);
 	let params = url.searchParams;
 	let group = params.get("group");
@@ -13,7 +11,7 @@ window.addEventListener("load", function() {
 
 	const isEmpty = (str => str == null || str == '');
 
-	fn.ajax = function(url, group, seat, success) {
+	function ajax(url, group, seat, success) {
 		if (!isEmpty(group) && !isEmpty(seat)) {
 			let form = new FormData();
 			form.append("group", group);
@@ -22,20 +20,20 @@ window.addEventListener("load", function() {
 				.then(response => response.text())
 				.then(data => success(data))
 				.catch(function() {
-					const ajax = () => fn.ajax(url, group, seat, success);
-					setTimeout(ajax, 30000);
+					const retry = () => ajax(url, group, seat, success);
+					setTimeout(retry, 30000);
 				});
 		}
 	}
 
-	fn.check = function() {
-		fn.ajax("/getNumberOfWaiting", group, seat, function(num) {
+	function check() {
+		ajax("/getNumberOfWaiting", group, seat, function(num) {
 			if (num > 0) {
 				numberOfWaiting.innerText = num;
 				message.style.display = "block";
 				okButton.style.display = "none";
 				let refreshCycle = ajaxRefreshCycle.innerText;
-				setTimeout(fn.check, refreshCycle * 1000);
+				setTimeout(check, refreshCycle * 1000);
 			} else {
 				message.style.display = "none";
 				okButton.style.display = "block";
@@ -47,14 +45,14 @@ window.addEventListener("load", function() {
 		if (isEmpty(seat)) {
 			let seat = document.getElementById("seat").value;
 			if (!isEmpty(seat)) {
-				fn.ajax("/callStaff", group, seat, fn.check);
+				ajax("/callStaff", group, seat, check);
 				location.href = "/user?group=" + group + "&seat=" + seat;
 			}
 		} else {
-			fn.ajax("/callStaff", group, seat, fn.check);
+			ajax("/callStaff", group, seat, check);
 		}
 	};
 
 	document.getElementById(isEmpty(seat) ? "seat" : "ok_button").focus();
-	fn.check();
+	check();
 });
