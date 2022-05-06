@@ -16,10 +16,14 @@
 
 	<h2>使い方</h2>
 	<ol>
-		<li>URLを共有
-			<button id="qrcode_button">QRコード</button>
-			<button id="url_button">URLをコピー</button>
-			<div id="copied">コピーしました</div>
+		<li>
+			<div class="box">
+				<div>
+					URLを共有
+					<button id="qrcode_button">QRコード</button>
+				</div>
+				<input id="url" readonly />
+			</div>
 		</li>
 		<li><a id="user_link">順番待ち受付</a>で座席番号を入力して受付</li>
 		<li><a id="staff_link">順番待ち一覧</a>で確認</li>

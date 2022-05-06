@@ -26,15 +26,6 @@ window.addEventListener("load", function() {
 		modal.onclick = () => modal.style.display = "none";
 	}
 
-	function setUrlCopyButton(url, urlButton) {
-		const copyUrl = () => navigator.clipboard.writeText(url).then(function() {
-			let style = document.getElementById("copied").style;
-			style.display = "inline-block";
-			setTimeout(() => style.display = "none", 1000);
-		});
-		urlButton.onclick = copyUrl;
-	}
-
 	function getUrl(group) {
 		let urlObject = new URL(location.href);
 		urlObject.searchParams.set("group", group.value);
@@ -44,7 +35,7 @@ window.addEventListener("load", function() {
 
 	let group = document.getElementById("group");
 	let qrcodeButton = document.getElementById("qrcode_button");
-	let urlButton = document.getElementById("url_button");
+	let urlTextBox = document.getElementById("url");
 	let modal = document.getElementById("modal");
 	let qrcodeArea = document.getElementById("qrcode");
 
@@ -53,5 +44,5 @@ window.addEventListener("load", function() {
 	setLinks(group);
 	setQrcode(qrcodeArea, url);
 	setModalAction(qrcodeButton, modal);
-	setUrlCopyButton(url, urlButton);
+	urlTextBox.value = url;
 });
