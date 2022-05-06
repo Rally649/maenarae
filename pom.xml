@@ -19,6 +19,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<webjars-bootstrap.version>4.5.3</webjars-bootstrap.version>
+		<webjars-locator.version>0.30</webjars-locator.version>
 	</properties>
 
 	<dependencies>
@@ -66,7 +67,7 @@
 		<dependency>
 			<groupId>org.webjars</groupId>
 			<artifactId>webjars-locator</artifactId>
-			<version>0.30</version>
+			<version>${webjars-locator.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
